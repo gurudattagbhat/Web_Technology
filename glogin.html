@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in - Google Accounts</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 40px;
+            width: 350px;
+            text-align: center;
+        }
+        img {
+            margin-bottom: 20px;
+        }
+        h1 {
+            margin: 0 0 10px;
+            font-size: 24px;
+            font-weight: normal;
+        }
+        p {
+            margin: 0 0 20px;
+            font-size: 16px;
+        }
+        input[type="email"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .links {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        .links a {
+            color: #1a73e8;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .guest-mode {
+            text-align: left;
+            font-size: 14px;
+            color: #555;
+            margin: 20px 0;
+        }
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .buttons a, .buttons button {
+            padding: 10px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .buttons a {
+            color: #1a73e8;
+        }
+        .buttons button {
+            background-color: #1a73e8;
+            color: #fff;
+            border: none;
+        }
+        footer {
+            display: flex;
+            justify-content: space-between;
+            width: 430px;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #555;
+        }
+        footer a {
+            color: #555;
+            text-decoration: none;
+            margin-left: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="icons8-google-logo-48.png" alt="Google logo" height="24px">
+        <h1>Sign in</h1>
+        <p>Use your Google Account</p>
+        <form>
+            <input type="email" placeholder="Email or phone" required>
+            <div class="links">
+                <a href="#">Forgot email?</a>
+            </div>
+            <p class="guest-mode">Not your computer? Use Guest mode to sign in privately. <a href="#">Learn more</a></p>
+            <div class="buttons">
+                <a href="#">Create account</a>
+                <button type="submit">Next</button>
+            </div>
+        </form>
+    </div>
+    <footer>
+        <span>English (United States)</span>
+        <div>
+            <a href="#">Help</a>
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+        </div>
+    </footer>
+</body>
+</html>

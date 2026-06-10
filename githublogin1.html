@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Sign in to GitHub</title>
+	<style>
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+			font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+		}
+
+		body {
+			min-height: 100vh;
+			background: #0d1117;
+			color: #f0f6fc;
+		}
+
+		a {
+			color: #2f81f7;
+			text-decoration: none;
+		}
+
+		a:hover {
+			text-decoration: underline;
+		}
+
+		.page {
+			min-height: 100vh;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+		}
+
+		.content {
+			flex: 1;
+			display: flex;
+			justify-content: center;
+			align-items: flex-start;
+			padding: 20px 16px 8px;
+		}
+
+		.login-box {
+			width: 100%;
+			max-width: 414px;
+		}
+
+		.logo {
+			width: 48px;
+			height: 48px;
+			margin: 0 auto 10px;
+			border-radius: 50%;
+			background: #f0f6fc;
+			display: grid;
+			place-items: center;
+		}
+
+		.logo img {
+			width: 27px;
+			height: 27px;
+			object-fit: contain;
+		}
+
+		h1 {
+			text-align: center;
+			font-size: 42px;
+			line-height: 1.15;
+			margin-bottom: 14px;
+			font-weight: 600;
+		}
+
+		.field {
+			margin-bottom: 12px;
+		}
+
+		label {
+			display: block;
+			font-size: 16px;
+			font-weight: 600;
+			margin-bottom: 10px;
+		}
+
+		.row {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			margin-bottom: 8px;
+		}
+
+		.row label,
+		.row a {
+			margin: 0;
+			font-size: 16px;
+		}
+
+		input {
+			width: 100%;
+			height: 46px;
+			border: 1px solid #30363d;
+			border-radius: 10px;
+			background: transparent;
+			color: #f0f6fc;
+			font-size: 14px;
+			padding: 0 14px;
+			outline: none;
+		}
+
+		input:focus {
+			border-color: #2f81f7;
+			box-shadow: 0 0 0 2px rgba(47, 129, 247, 0.35);
+		}
+
+		.btn {
+			width: 100%;
+			height: 44px;
+			border: 0;
+			border-radius: 8px;
+			font-size: 16px;
+			font-weight: 600;
+			cursor: pointer;
+			margin-top: 6px;
+		}
+
+		.primary {
+			background: #238636;
+			color: #fff;
+		}
+
+		.primary:hover {
+			background: #2ea043;
+		}
+
+		.divider {
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			margin: 14px 0 12px;
+			font-size: 14px;
+		}
+
+		.divider:before,
+		.divider:after {
+			content: "";
+			flex: 1;
+			height: 1px;
+			background: #30363d;
+		}
+
+		.social {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 12px;
+			width: 100%;
+			height: 46px;
+			margin-bottom: 8px;
+			border: 1px solid #30363d;
+			border-radius: 8px;
+			background: #212830;
+			color: #f0f6fc;
+			font-size: 16px;
+			font-weight: 600;
+			cursor: pointer;
+		}
+
+		.social:hover {
+			background: #27313d;
+		}
+
+		.icon {
+			width: 24px;
+			height: 24px;
+			object-fit: contain;
+		}
+
+		.bottom,
+		.pass {
+			text-align: center;
+			font-size: 16px;
+		}
+
+		.bottom {
+			margin-top: 10px;
+		}
+
+		.pass {
+			margin-top: 8px;
+			font-weight: 600;
+		}
+
+		.footer {
+			display: flex;
+			justify-content: center;
+			flex-wrap: wrap;
+			gap: 24px 34px;
+			padding: 10px 16px;
+			background: #161b22;
+			border-top: 1px solid #30363d;
+		}
+
+		.footer a {
+			color: #8b949e;
+			font-size: 13px;
+		}
+
+		.footer a:hover {
+			color: #c9d1d9;
+		}
+	</style>
+</head>
+<body>
+	<div class="page">
+		<section class="content">
+			<main class="login-box">
+				<div class="logo">
+					<img src="New folder/github.png" alt="GitHub logo">
+				</div>
+				<h1>Sign in to GitHub</h1>
+
+				<form>
+					<div class="field">
+						<label for="username">Username or email address</label>
+						<input id="username" type="text" required>
+					</div>
+
+					<div class="field">
+						<div class="row">
+							<label for="password">Password</label>
+							<a href="#">Forgot password?</a>
+						</div>
+						<input id="password" type="password" required>
+					</div>
+
+					<button class="btn primary" type="submit">Sign in</button>
+				</form>
+
+				<div class="divider">or</div>
+
+				<button class="social" type="button">
+					<img class="icon" src="New folder/icons8-google-logo-48.png" alt="Google logo">
+					Continue with Google
+				</button>
+
+				<button class="social" type="button">
+					<img class="icon" src="New folder/apple-logo.png" alt="Apple logo">
+					Continue with Apple
+				</button>
+
+				<p class="bottom">New to GitHub? <a href="#">Create an account</a></p>
+				<p class="pass"><a href="#">Sign in with a passkey</a></p>
+			</main>
+		</section>
+
+		<footer class="footer">
+			<a href="#">Terms</a>
+			<a href="#">Privacy</a>
+			<a href="#">Docs</a>
+			<a href="#">Contact GitHub Support</a>
+			<a href="#">Manage cookies</a>
+			<a href="#">Do not share my personal information</a>
+		</footer>
+	</div>
+</body>
+</html>
