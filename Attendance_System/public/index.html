@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Attendance Portal & Calculator | MongoDB Powered</title>
+  <!-- Google Fonts: Inter & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Remix Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-wrapper">
+
+    <!-- Top Navigation Header -->
+    <header class="navbar">
+      <div class="brand">
+        <div class="brand-icon">
+          <i class="ri-calculator-line"></i>
+        </div>
+        <div class="brand-text">
+          <h1>Attendance Portal</h1>
+          <span class="subtitle">MongoDB Full-Stack Management System</span>
+        </div>
+      </div>
+      
+      <div class="nav-actions">
+        <!-- DB Status Badge -->
+        <div id="dbStatusBadge" class="db-badge status-connecting">
+          <span class="pulse-dot"></span>
+          <span id="dbStatusText">Checking DB...</span>
+        </div>
+
+        <button id="btnSeedData" class="btn btn-secondary btn-sm" title="Re-seed MongoDB database with sample records">
+          <i class="ri-refresh-line"></i> Seed DB Data
+        </button>
+      </div>
+    </header>
+
+    <!-- Navigation Tabs Bar -->
+    <nav class="nav-tabs">
+      <button class="nav-tab active" data-tab="tab-calculator">
+        <i class="ri-pie-chart-2-line"></i> Attendance Calculator
+      </button>
+      <button class="nav-tab" data-tab="tab-take-attendance">
+        <i class="ri-checkbox-multiple-line"></i> Take Attendance
+      </button>
+      <button class="nav-tab" data-tab="tab-manage-students">
+        <i class="ri-user-settings-line"></i> Manage Students
+      </button>
+    </nav>
+
+    <!-- TAB 1: ATTENDANCE CALCULATOR -->
+    <div id="tab-calculator" class="tab-content active">
+      <main class="main-container">
+
+        <!-- Left Column: Input Form -->
+        <section class="card input-card">
+          <div class="card-header">
+            <h2><i class="ri-filter-3-line"></i> Attendance Filters</h2>
+            <p>Select student & date range from MongoDB</p>
+          </div>
+
+          <form id="attendanceForm" onsubmit="return false;">
+
+            <!-- Student Select -->
+            <div class="form-group">
+              <label for="studentSelect">Select Student from Database</label>
+              <div class="input-with-icon">
+                <i class="ri-user-search-line input-icon"></i>
+                <select id="studentSelect" class="form-control">
+                  <option value="">-- Loading MongoDB Students --</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <!-- Regno -->
+              <div class="form-group">
+                <label for="regNoInput">Reg No <span class="required">*</span></label>
+                <div class="input-with-icon">
+                  <i class="ri-id-card-line input-icon"></i>
+                  <input type="text" id="regNoInput" class="form-control" placeholder="e.g. 24MCA001" required />
+                </div>
+              </div>
+
+              <!-- Student Name -->
+              <div class="form-group">
+                <label for="studentNameInput">Student Name <span class="required">*</span></label>
+                <div class="input-with-icon">
+                  <i class="ri-user-3-line input-icon"></i>
+                  <input type="text" id="studentNameInput" class="form-control" placeholder="Student Name" required readonly />
+                </div>
+              </div>
+            </div>
+
+            <!-- Date Quick Presets -->
+            <div class="form-group">
+              <label>Quick Date Presets</label>
+              <div class="preset-chips">
+                <button type="button" class="chip active" data-preset="all">Full Term (Jun - Aug)</button>
+                <button type="button" class="chip" data-preset="july">July 2026</button>
+                <button type="button" class="chip" data-preset="august">August 2026</button>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <!-- From Date -->
+              <div class="form-group">
+                <label for="fromDateInput">From Date</label>
+                <div class="input-with-icon">
+                  <i class="ri-calendar-line input-icon"></i>
+                  <input type="date" id="fromDateInput" class="form-control" value="2026-06-01" />
+                </div>
+              </div>
+
+              <!-- To Date -->
+              <div class="form-group">
+                <label for="toDateInput">To Date</label>
+                <div class="input-with-icon">
+                  <i class="ri-calendar-event-line input-icon"></i>
+                  <input type="date" id="toDateInput" class="form-control" value="2026-08-17" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Percentage Button (Featured Prompt Requirement) -->
+            <div class="form-actions">
+              <button type="submit" id="btnCalculate" class="btn btn-primary btn-block">
+                <i class="ri-pie-chart-2-line"></i>
+                <span>Percentage Button</span>
+              </button>
+            </div>
+
+          </form>
+        </section>
+
+        <!-- Right Column: DOM Output Display -->
+        <section class="card results-card" id="resultsSection">
+          <div class="card-header flex-between">
+            <div>
+              <h2><i class="ri-dashboard-3-line"></i> Attendance Summary</h2>
+              <p>Calculated dynamic DOM output</p>
+            </div>
+            <div id="statusBadgeContainer">
+              <span class="badge badge-lg status-eligible" id="badgeEligibility">Eligible</span>
+            </div>
+          </div>
+
+          <!-- Initial Placeholder State -->
+          <div id="placeholderView" class="placeholder-state hidden">
+            <i class="ri-bar-chart-box-line placeholder-icon"></i>
+            <h3>No Student Selected</h3>
+            <p>Select a student register number and click <strong>Percentage Button</strong> to display details.</p>
+          </div>
+
+          <!-- Dynamic Results DOM Container -->
+          <div id="resultsContent" class="results-content">
+
+            <!-- Student Meta Banner -->
+            <div class="student-meta-card">
+              <div class="avatar-box" id="studentAvatar">AS</div>
+              <div class="student-info">
+                <h3 id="domStudentName">Aarav Sharma</h3>
+                <div class="meta-tags">
+                  <span class="meta-tag"><i class="ri-hashtag"></i> <strong id="domRegNo">24MCA001</strong></span>
+                  <span class="meta-tag"><i class="ri-building-4-line"></i> <span id="domDepartment">Master of Computer Applications</span></span>
+                  <span class="meta-tag"><i class="ri-calendar-2-line"></i> <span id="domDateRange">2026-06-01 to 2026-08-17</span></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Percentage Visual Gauge & Key Metrics -->
+            <div class="metrics-grid">
+
+              <!-- Circular Gauge Card -->
+              <div class="metric-card gauge-card">
+                <div class="gauge-wrapper">
+                  <svg class="gauge-svg" viewBox="0 0 120 120">
+                    <circle class="gauge-bg" cx="60" cy="60" r="52"></circle>
+                    <circle class="gauge-progress" id="gaugeCircle" cx="60" cy="60" r="52" stroke-dasharray="326.72" stroke-dashoffset="65"></circle>
+                  </svg>
+                  <div class="gauge-text">
+                    <span class="gauge-number" id="domPercentage">92.3%</span>
+                    <span class="gauge-label">Attendance</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Stats Boxes -->
+              <div class="stats-boxes">
+                <div class="stat-box stat-working">
+                  <div class="stat-icon"><i class="ri-calendar-check-line"></i></div>
+                  <div class="stat-info">
+                    <span class="stat-value" id="domWorkingDays">56</span>
+                    <span class="stat-title">Total Days</span>
+                  </div>
+                </div>
+
+                <div class="stat-box stat-present">
+                  <div class="stat-icon"><i class="ri-checkbox-circle-line"></i></div>
+                  <div class="stat-info">
+                    <span class="stat-value" id="domPresentDays">50</span>
+                    <span class="stat-title">Days Present</span>
+                  </div>
+                </div>
+
+                <div class="stat-box stat-absent">
+                  <div class="stat-icon"><i class="ri-close-circle-line"></i></div>
+                  <div class="stat-info">
+                    <span class="stat-value" id="domAbsentDays">4</span>
+                    <span class="stat-title">Days Absent</span>
+                  </div>
+                </div>
+
+                <div class="stat-box stat-onduty">
+                  <div class="stat-icon"><i class="ri-briefcase-line"></i></div>
+                  <div class="stat-info">
+                    <span class="stat-value" id="domOnDutyDays">2</span>
+                    <span class="stat-title">On-Duty / Leave</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Attendance Records Log Table -->
+            <div class="table-container">
+              <div class="table-header flex-between">
+                <h4><i class="ri-list-check"></i> Daily Attendance Breakdown (MongoDB)</h4>
+                <button id="btnToggleTable" class="btn btn-ghost btn-xs"><i class="ri-arrow-down-s-line"></i> Expand Details</button>
+              </div>
+              <div id="tableWrapper" class="table-scroll">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Date</th>
+                      <th>Status</th>
+                      <th>Remarks</th>
+                    </tr>
+                  </thead>
+                  <tbody id="domTableBody">
+                    <!-- Generated via DOM JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+
+        </section>
+
+      </main>
+    </div>
+
+    <!-- TAB 2: TAKE ATTENDANCE PAGE -->
+    <div id="tab-take-attendance" class="tab-content">
+      <section class="card">
+        <div class="card-header flex-between">
+          <div>
+            <h2><i class="ri-checkbox-multiple-line"></i> Daily Attendance Sheet</h2>
+            <p>Mark attendance for all students and submit directly to MongoDB</p>
+          </div>
+          <div class="date-picker-box">
+            <label for="takeAttendanceDate">Attendance Date:</label>
+            <input type="date" id="takeAttendanceDate" class="form-control form-control-inline" value="2026-08-17" />
+          </div>
+        </div>
+
+        <!-- Mass Actions Bar -->
+        <div class="mass-actions-bar">
+          <span>Quick Mass Actions:</span>
+          <button id="btnMarkAllPresent" class="btn btn-sm btn-outline-success"><i class="ri-checkbox-circle-line"></i> Mark All Present</button>
+          <button id="btnMarkAllAbsent" class="btn btn-sm btn-outline-danger"><i class="ri-close-circle-line"></i> Mark All Absent</button>
+        </div>
+
+        <!-- Attendance Roster Table -->
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Reg No</th>
+                <th>Student Name</th>
+                <th>Status (Select)</th>
+                <th>Remarks</th>
+              </tr>
+            </thead>
+            <tbody id="takeAttendanceTableBody">
+              <!-- Dynamically populated via app.js -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="form-actions-right mt-3">
+          <button id="btnSaveAttendanceSheet" class="btn btn-primary btn-lg">
+            <i class="ri-save-3-line"></i> Save Class Attendance to MongoDB
+          </button>
+        </div>
+
+      </section>
+    </div>
+
+    <!-- TAB 3: MANAGE STUDENTS PAGE (Add, Edit, Remove Students) -->
+    <div id="tab-manage-students" class="tab-content">
+      <section class="card">
+        <div class="card-header flex-between">
+          <div>
+            <h2><i class="ri-user-settings-line"></i> Student Directory & Database Management</h2>
+            <p>Add new students, edit profiles, or remove students from MongoDB</p>
+          </div>
+          <button id="btnOpenAddStudent" class="btn btn-primary">
+            <i class="ri-user-add-line"></i> + Add New Student
+          </button>
+        </div>
+
+        <!-- Roster Table -->
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Reg No</th>
+                <th>Student Name</th>
+                <th>Department</th>
+                <th>Semester</th>
+                <th>Email</th>
+                <th style="text-align: right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="studentDirectoryTableBody">
+              <!-- Dynamically populated via app.js -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>Attendance Portal System &copy; 2026 | Node.js, Express & MongoDB Database Integration</p>
+    </footer>
+
+    <!-- Add / Edit Student Modal -->
+    <div id="studentModal" class="modal-overlay hidden">
+      <div class="modal-content card">
+        <div class="modal-header">
+          <h3 id="modalTitle"><i class="ri-user-add-line"></i> Add Student to MongoDB</h3>
+          <button id="btnCloseModal" class="btn-close"><i class="ri-close-line"></i></button>
+        </div>
+        <form id="studentForm">
+          <input type="hidden" id="editOriginalRegNo" value="" />
+          
+          <div class="form-group">
+            <label for="modalRegNo">Register Number (RegNo) *</label>
+            <input type="text" id="modalRegNo" class="form-control" placeholder="e.g. 24MCA007" required />
+          </div>
+          <div class="form-group">
+            <label for="modalName">Student Full Name *</label>
+            <input type="text" id="modalName" class="form-control" placeholder="e.g. Rahul Sharma" required />
+          </div>
+          <div class="form-group">
+            <label for="modalDept">Department</label>
+            <input type="text" id="modalDept" class="form-control" value="Master of Computer Applications" />
+          </div>
+          <div class="form-group">
+            <label for="modalSem">Semester</label>
+            <input type="text" id="modalSem" class="form-control" value="Sem II" />
+          </div>
+          <div class="form-group">
+            <label for="modalEmail">Email Address</label>
+            <input type="email" id="modalEmail" class="form-control" placeholder="student@univ.edu" />
+          </div>
+          <div class="modal-actions">
+            <button type="button" id="btnCancelModal" class="btn btn-secondary">Cancel</button>
+            <button type="submit" class="btn btn-primary"><i class="ri-save-line"></i> Save Student</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="modal-overlay hidden">
+      <div class="modal-content card" style="max-width: 400px;">
+        <div class="modal-header">
+          <h3 style="color: var(--danger);"><i class="ri-delete-bin-line"></i> Remove Student</h3>
+          <button id="btnCloseDeleteModal" class="btn-close"><i class="ri-close-line"></i></button>
+        </div>
+        <p>Are you sure you want to remove <strong id="deleteStudentName">Student Name</strong> (<span id="deleteRegNo">24MCA001</span>) from MongoDB? All attendance records for this student will also be deleted.</p>
+        <div class="modal-actions mt-3">
+          <button id="btnCancelDelete" class="btn btn-secondary">Cancel</button>
+          <button id="btnConfirmDelete" class="btn btn-danger"><i class="ri-delete-bin-line"></i> Delete Student</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notification Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
