@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProResume - AI-Powered Professional Resume Builder</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/print.css" media="print">
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <header class="app-header no-print">
+        <div class="logo-container">
+            <div class="logo-icon"><i class="fa-solid fa-file-invoice"></i></div>
+            <div class="logo-text">ProResume <span>Builder</span></div>
+        </div>
+
+        <div class="header-actions">
+            <button id="btn-sample-data" class="btn btn-outline" title="Fill form with sample data">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> Load Sample Data
+            </button>
+
+            <button id="btn-clear" class="btn btn-ghost" title="Clear all fields">
+                <i class="fa-solid fa-rotate-left"></i> Reset
+            </button>
+
+            <div class="template-selector">
+                <label for="select-template"><i class="fa-solid fa-palette"></i> Template:</label>
+                <select id="select-template">
+                    <option value="modern">Modern Tech</option>
+                    <option value="executive">Executive Classic</option>
+                    <option value="minimal">Minimalist Slate</option>
+                    <option value="creative">Creative Gradient</option>
+                </select>
+            </div>
+
+            <button id="btn-build-resume-top" class="btn btn-primary btn-glow">
+                <i class="fa-solid fa-bolt"></i> Build Resume
+            </button>
+
+            <button id="btn-print-top" class="btn btn-success">
+                <i class="fa-solid fa-print"></i> Download / Print PDF
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Container: Split View -->
+    <main class="app-container">
+        <!-- Left Panel: Form Controls -->
+        <section class="form-panel no-print">
+            <div class="panel-header">
+                <h2><i class="fa-solid fa-pen-to-square"></i> Resume Details</h2>
+                <p>Fill in your details below. Click <strong>Build Resume</strong> to open and print!</p>
+            </div>
+
+            <form id="resume-form" onsubmit="return false;">
+                <!-- 1. Profile & Basic Info -->
+                <div class="accordion-item active">
+                    <div class="accordion-header">
+                        <span><i class="fa-solid fa-user"></i> Personal & Profile Info</span>
+                        <i class="fa-solid fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="form-grid">
+                            <div class="form-group full-width">
+                                <label for="input-name">Full Name <span class="required">*</span></label>
+                                <input type="text" id="input-name" placeholder="e.g. Alex R. Mercer" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="input-email">Email Address <span class="required">*</span></label>
+                                <input type="email" id="input-email" placeholder="alex.mercer@example.com" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="input-phn">Phone Number (`phn`) <span class="required">*</span></label>
+                                <input type="tel" id="input-phn" placeholder="+1 (555) 234-5678" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="input-location">Location / City</label>
+                                <input type="text" id="input-location" placeholder="New York, NY">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="input-profile-title">Professional Title / Profile</label>
+                                <input type="text" id="input-profile-title" placeholder="Full Stack Software Engineer">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="input-github"><i class="fa-brands fa-github"></i> GitHub URL</label>
+                                <input type="url" id="input-github" placeholder="https://github.com/alexmercer">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="input-linkdin"><i class="fa-brands fa-linkedin"></i> LinkedIn URL</label>
+                                <input type="url" id="input-linkdin" placeholder="https://linkedin.com/in/alexmercer">
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label><i class="fa-solid fa-image"></i> Profile Photo</label>
+                                <div class="photo-input-group">
+                                    <input type="file" id="input-photo-file" accept="image/*" class="file-input-hidden">
+                                    <button type="button" class="btn btn-secondary btn-sm" id="btn-upload-photo">
+                                        <i class="fa-solid fa-upload"></i> Choose Image File
+                                    </button>
+                                    <button type="button" class="btn btn-danger btn-sm hidden" id="btn-remove-photo">
+                                        <i class="fa-solid fa-trash"></i> Remove
+                                    </button>
+                                </div>
+                                <div id="photo-preview-wrapper" class="photo-preview-container hidden">
+                                    <img id="photo-preview-img" src="" alt="Profile Photo Preview">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group full-width margin-top">
+                            <label for="input-objective"><i class="fa-solid fa-bullseye"></i> Career Objective / Summary</label>
+                            <textarea id="input-objective" rows="3" placeholder="Passionate software engineer with 4+ years of experience building scalable web applications..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Education & Qualifications -->
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span><i class="fa-solid fa-graduation-cap"></i> Qualifications & Education</span>
+                        <i class="fa-solid fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="accordion-body">
+                        <div id="education-list" class="dynamic-list"></div>
+                        <button type="button" id="btn-add-education" class="btn btn-secondary btn-sm">
+                            <i class="fa-solid fa-plus"></i> Add Qualification / Education
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 3. Work Experience & Internships -->
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span><i class="fa-solid fa-briefcase"></i> Work Experience / Internships</span>
+                        <i class="fa-solid fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="accordion-body">
+                        <div id="experience-list" class="dynamic-list"></div>
+                        <button type="button" id="btn-add-experience" class="btn btn-secondary btn-sm">
+                            <i class="fa-solid fa-plus"></i> Add Work Exp / Internship
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 4. Projects -->
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span><i class="fa-solid fa-laptop-code"></i> Projects</span>
+                        <i class="fa-solid fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="accordion-body">
+                        <div id="projects-list" class="dynamic-list"></div>
+                        <button type="button" id="btn-add-project" class="btn btn-secondary btn-sm">
+                            <i class="fa-solid fa-plus"></i> Add Project
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 5. Skills -->
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span><i class="fa-solid fa-code"></i> Skills</span>
+                        <i class="fa-solid fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="form-group full-width">
+                            <label for="input-skills">Technical & Soft Skills (comma separated)</label>
+                            <input type="text" id="input-skills" placeholder="JavaScript, Node.js, Express, React, HTML5/CSS3, SQL, Git, Problem Solving">
+                            <small class="help-text">Separate skills with commas (e.g. JavaScript, Python, Communication)</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. Certificates -->
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span><i class="fa-solid fa-certificate"></i> Certificates</span>
+                        <i class="fa-solid fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="accordion-body">
+                        <div id="certificates-list" class="dynamic-list"></div>
+                        <button type="button" id="btn-add-certificate" class="btn btn-secondary btn-sm">
+                            <i class="fa-solid fa-plus"></i> Add Certificate
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 7. Strengths, Weaknesses & Hobbies -->
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span><i class="fa-solid fa-star"></i> Strengths, Weaknesses & Hobbies</span>
+                        <i class="fa-solid fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="accordion-body">
+                        <div class="form-group full-width">
+                            <label for="input-strengths">Strengths (comma separated)</label>
+                            <input type="text" id="input-strengths" placeholder="Analytical Thinking, Leadership, Adaptability">
+                        </div>
+
+                        <div class="form-group full-width margin-top">
+                            <label for="input-weaknesses">Weaknesses (comma separated)</label>
+                            <input type="text" id="input-weaknesses" placeholder="Over-perfectionism, Public Speaking (improving)">
+                        </div>
+
+                        <div class="form-group full-width margin-top">
+                            <label for="input-hobbies">Hobbies & Interests (comma separated)</label>
+                            <input type="text" id="input-hobbies" placeholder="Open Source Contributing, Chess, Photography, Running">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button Section -->
+                <div class="form-submit-container">
+                    <button type="button" id="btn-build-resume" class="btn btn-primary btn-large btn-glow full-width">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Build Resume
+                    </button>
+                    <p class="submit-note"><i class="fa-solid fa-circle-info"></i> Automatically creates, opens preview, and enables instant download/print.</p>
+                </div>
+            </form>
+        </section>
+
+        <!-- Right Panel: Live Resume Preview -->
+        <section class="preview-panel">
+            <div class="preview-toolbar no-print">
+                <div class="preview-title">
+                    <i class="fa-solid fa-eye"></i> Live Resume Preview
+                </div>
+                <div class="preview-actions">
+                    <button id="btn-view-fullscreen" class="btn btn-sm btn-ghost" title="Full Screen Preview">
+                        <i class="fa-solid fa-expand"></i> Fullscreen
+                    </button>
+                    <button id="btn-print-preview" class="btn btn-sm btn-success">
+                        <i class="fa-solid fa-download"></i> Print / Download PDF
+                    </button>
+                </div>
+            </div>
+
+            <!-- Resume Render Container (This is printed) -->
+            <div class="resume-paper-wrapper">
+                <div id="resume-render-area" class="resume-paper modern-theme">
+                    <!-- Dynamic Resume Content rendered via templates.js -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal for Fullscreen Resume Viewer & Automatic Open -->
+    <div id="modal-resume-view" class="modal-overlay no-print hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-circle-check text-success"></i> Your Resume Has Been Built!</h3>
+                <div class="modal-actions">
+                    <button id="btn-modal-print" class="btn btn-success">
+                        <i class="fa-solid fa-print"></i> Download / Print PDF
+                    </button>
+                    <button id="btn-modal-close" class="btn btn-ghost">
+                        <i class="fa-solid fa-xmark"></i> Close
+                    </button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div id="modal-resume-render-area" class="resume-paper modern-theme">
+                    <!-- Cloned rendered resume -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Scripts -->
+    <script src="js/templates.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

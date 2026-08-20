@@ -1,0 +1,85 @@
+/* -------------------------------------------------------------
+ * ProResume Builder - Print Stylesheet
+ * Optimized for crisp PDF exports and paper printing
+ * ------------------------------------------------------------- */
+
+@media print {
+    /* Hide all non-printable application elements */
+    .no-print,
+    .app-header,
+    .form-panel,
+    .preview-toolbar,
+    .modal-overlay,
+    .btn,
+    .toggle-icon {
+        display: none !important;
+    }
+
+    /* Reset Body and Container Styles */
+    html, body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+        overflow: visible !important;
+    }
+
+    .app-container {
+        display: block !important;
+        height: auto !important;
+        overflow: visible !important;
+    }
+
+    .preview-panel {
+        background: transparent !important;
+        overflow: visible !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+    }
+
+    .resume-paper-wrapper {
+        padding: 0 !important;
+        margin: 0 !important;
+        display: block !important;
+        background: transparent !important;
+    }
+
+    .resume-paper {
+        width: 100% !important;
+        min-height: 100% !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        background: white !important;
+        color: black !important;
+    }
+
+    /* Print Page Setup */
+    @page {
+        size: A4 portrait;
+        margin: 12mm 15mm 12mm 15mm;
+    }
+
+    /* Avoid bad page breaks */
+    .modern-section,
+    .executive-section,
+    .modern-item,
+    .executive-item {
+        page-break-inside: avoid;
+    }
+
+    .tag-chip {
+        border: 1px solid #94a3b8 !important;
+        background: #f8fafc !important;
+        color: #0f172a !important;
+    }
+
+    a {
+        color: inherit !important;
+        text-decoration: none !important;
+    }
+}
