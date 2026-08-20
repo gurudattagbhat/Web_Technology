@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Online Feedback Form & Reports</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --font-main: 'Plus Jakarta Sans', sans-serif;
+      --font-heading: 'Outfit', sans-serif;
+      --bg-main: #f8fafc;
+      --card-bg: #ffffff;
+      --card-border: #e2e8f0;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --accent-rose: #dc2626;
+      --accent-amber: #d97706;
+      --accent-emerald: #059669;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: var(--font-main);
+      background-color: var(--bg-main);
+      color: var(--text-primary);
+      line-height: 1.5;
+      padding: 24px 16px 60px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    /* Header Nav */
+    .header {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 18px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--primary);
+      color: white;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.2rem;
+    }
+
+    .brand h1 {
+      font-size: 1.3rem;
+      font-family: var(--font-heading);
+      color: var(--text-primary);
+    }
+
+    .nav-tabs {
+      display: flex;
+      background: #e2e8f0;
+      padding: 4px;
+      border-radius: 8px;
+      gap: 4px;
+    }
+
+    .nav-tab {
+      padding: 8px 16px;
+      border-radius: 6px;
+      border: none;
+      background: transparent;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+    }
+
+    .nav-tab.active {
+      background: #ffffff;
+      color: var(--primary);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .db-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      background: #d1fae5;
+      color: #065f46;
+      border: 1px solid #a7f3d0;
+    }
+
+    /* Card */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 28px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+      margin-bottom: 24px;
+    }
+
+    .card-title {
+      font-family: var(--font-heading);
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--text-primary);
+    }
+
+    .card-subtitle {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 14px;
+    }
+
+    /* Form Fields */
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+
+    .form-label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .required { color: var(--accent-rose); font-weight: 700; }
+
+    .form-control {
+      width: 100%;
+      padding: 10px 14px;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      font-family: var(--font-main);
+      color: var(--text-primary);
+      outline: none;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
+    }
+
+    .form-control.error {
+      border-color: var(--accent-rose);
+      background-color: #fef2f2;
+    }
+
+    .error-msg {
+      font-size: 0.8rem;
+      color: var(--accent-rose);
+      display: none;
+    }
+
+    /* Rating Stars */
+    .rating-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      padding: 10px 16px;
+    }
+
+    .stars {
+      display: flex;
+      gap: 6px;
+    }
+
+    .star-btn {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #cbd5e1;
+      transition: transform 0.1s ease;
+    }
+
+    .star-btn:hover { transform: scale(1.2); }
+    .star-btn.active { color: #f59e0b; }
+
+    .rating-val {
+      font-weight: 700;
+      color: #d97706;
+      font-size: 0.95rem;
+    }
+
+    /* Buttons */
+    .btn {
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid transparent;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: var(--primary-hover); }
+    .btn-secondary { background: white; border-color: #cbd5e1; color: var(--text-primary); }
+    .btn-secondary:hover { background: #f1f5f9; }
+    .btn-emerald { background: #059669; color: white; }
+    .btn-amber { background: #d97706; color: white; }
+    .btn-sm { padding: 6px 12px; font-size: 0.82rem; }
+
+    /* Report Section */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .metric-card {
+      background: white;
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .metric-val { font-size: 1.5rem; font-weight: 800; font-family: var(--font-heading); }
+    .metric-lbl { font-size: 0.78rem; color: var(--text-secondary); text-transform: uppercase; font-weight: 600; }
+
+    /* Table */
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      text-align: left;
+    }
+
+    .table th {
+      background: #f1f5f9;
+      padding: 10px 14px;
+      border-bottom: 2px solid #cbd5e1;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+    }
+
+    .table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: white;
+      border: 1px solid #cbd5e1;
+      border-left: 4px solid var(--accent-emerald);
+      padding: 12px 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+      display: none;
+      z-index: 9999;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- Top Header -->
+    <header class="header">
+      <div class="brand">
+        <div class="brand-icon">📝</div>
+        <div>
+          <h1>Online Feedback Form: 15</h1>
+          <p style="font-size: 0.8rem; color: var(--text-secondary);">College Feedback System with MongoDB & Report Generation</p>
+        </div>
+      </div>
+
+      <div class="nav-tabs">
+        <button class="nav-tab active" id="tab-form-btn" onclick="showTab('form')">Feedback Form</button>
+        <button class="nav-tab" id="tab-report-btn" onclick="showTab('report')">Generated Reports</button>
+      </div>
+
+      <div class="db-status" id="db-status-badge">
+        MongoDB: Connected
+      </div>
+    </header>
+
+    <!-- SECTION 1: FEEDBACK FORM -->
+    <section id="section-form" class="card">
+      <h2 class="card-title">Online Feedback Form</h2>
+      <p class="card-subtitle">Please fill in all mandatory fields marked with <span class="required">*</span></p>
+
+      <form id="feedback-form" onsubmit="handleFormSubmit(event)">
+        <div class="form-grid">
+          
+          <!-- 1) Reg no -->
+          <div class="form-group">
+            <label class="form-label" for="regNo">1) Reg no <span class="required">*</span></label>
+            <input type="text" id="regNo" class="form-control" placeholder="e.g. 21MCA0101" required />
+            <span class="error-msg" id="err-regNo">Registration Number is required</span>
+          </div>
+
+          <!-- 2) Student Name -->
+          <div class="form-group">
+            <label class="form-label" for="studentName">2) Student Name <span class="required">*</span></label>
+            <input type="text" id="studentName" class="form-control" placeholder="Enter student name" required />
+            <span class="error-msg" id="err-studentName">Student Name is required</span>
+          </div>
+
+          <!-- 3) Clg Email id -->
+          <div class="form-group">
+            <label class="form-label" for="clgEmail">3) Clg Email id <span class="required">*</span></label>
+            <input type="email" id="clgEmail" class="form-control" placeholder="student@college.edu" required />
+            <span class="error-msg" id="err-clgEmail">Valid College Email is required</span>
+          </div>
+
+          <!-- 4) Phn no -->
+          <div class="form-group">
+            <label class="form-label" for="phnNo">4) Phn no <span class="required">*</span></label>
+            <input type="tel" id="phnNo" class="form-control" placeholder="10-digit mobile number" required />
+            <span class="error-msg" id="err-phnNo">Valid 10-digit Phone Number required</span>
+          </div>
+
+          <!-- 5) Select Sub (Dropdown) -->
+          <div class="form-group">
+            <label class="form-label" for="subject">5) Select Sub (Dropdown) <span class="required">*</span></label>
+            <select id="subject" class="form-control" onchange="handleSubjectSelect()" required>
+              <option value="">-- Select Subject --</option>
+              <option value="Web Technologies">Web Technologies</option>
+              <option value="Database Management Systems">Database Management Systems</option>
+              <option value="Data Structures & Algorithms">Data Structures & Algorithms</option>
+              <option value="Cloud Computing">Cloud Computing</option>
+              <option value="Artificial Intelligence & ML">Artificial Intelligence & ML</option>
+            </select>
+            <span class="error-msg" id="err-subject">Please select a subject</span>
+          </div>
+
+          <!-- 6) About faculty (Dropdown) -->
+          <div class="form-group">
+            <label class="form-label" for="faculty">6) About faculty (Dropdown) <span class="required">*</span></label>
+            <select id="faculty" class="form-control" required>
+              <option value="">-- Select Faculty --</option>
+              <option value="Dr. Rajesh Kumar">Dr. Rajesh Kumar</option>
+              <option value="Prof. Sunita Patel">Prof. Sunita Patel</option>
+              <option value="Dr. Vikramaditya">Dr. Vikramaditya</option>
+              <option value="Prof. Anita Roy">Prof. Anita Roy</option>
+              <option value="Dr. Amitav Ghosh">Dr. Amitav Ghosh</option>
+            </select>
+            <span class="error-msg" id="err-faculty">Please select a faculty member</span>
+          </div>
+
+        </div>
+
+        <!-- 7) Each faculty rating (out of 5) -->
+        <div class="form-group" style="margin-top: 10px;">
+          <label class="form-label">7) Each faculty rating (out of 5) <span class="required">*</span></label>
+          <div class="rating-box">
+            <div class="stars">
+              <button type="button" class="star-btn" onclick="setRating(1)">★</button>
+              <button type="button" class="star-btn" onclick="setRating(2)">★</button>
+              <button type="button" class="star-btn" onclick="setRating(3)">★</button>
+              <button type="button" class="star-btn" onclick="setRating(4)">★</button>
+              <button type="button" class="star-btn" onclick="setRating(5)">★</button>
+            </div>
+            <div class="rating-val" id="rating-text">Select rating out of 5</div>
+          </div>
+          <span class="error-msg" id="err-rating">Faculty rating is required</span>
+        </div>
+
+        <!-- 8) Any Queries / Suggestions -->
+        <div class="form-group" style="margin-top: 10px;">
+          <label class="form-label" for="queriesSuggestions">8) Any Queries / Suggestions</label>
+          <textarea id="queriesSuggestions" rows="3" class="form-control" placeholder="Write any query or suggestion..."></textarea>
+        </div>
+
+        <!-- 9) Submit button -->
+        <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 20px;">
+          <button type="button" class="btn btn-secondary" onclick="resetForm()">Reset</button>
+          <button type="submit" class="btn btn-primary" id="btn-submit">9) Submit Button</button>
+        </div>
+      </form>
+    </section>
+
+
+    <!-- SECTION 2: REPORT GENERATION DASHBOARD -->
+    <section id="section-report" class="card" style="display: none;">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 16px;">
+        <div>
+          <h2 class="card-title">Generated Analytics Report</h2>
+          <p style="font-size: 0.85rem; color: var(--text-secondary);">Real-time metrics calculated based on MongoDB saved feedbacks</p>
+        </div>
+
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <button class="btn btn-secondary btn-sm" onclick="fetchReportData()">Refresh</button>
+          <button class="btn btn-amber btn-sm" onclick="seedDemoData()">Seed Demo Data</button>
+          <button class="btn btn-emerald btn-sm" onclick="exportCSV()">Export CSV</button>
+          <button class="btn btn-secondary btn-sm" onclick="window.print()">Print Report</button>
+        </div>
+      </div>
+
+      <!-- Metric Summary Cards -->
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div>
+            <div class="metric-val" id="metric-total">0</div>
+            <div class="metric-lbl">Total Feedbacks</div>
+          </div>
+        </div>
+        <div class="metric-card">
+          <div>
+            <div class="metric-val" id="metric-avg" style="color: #d97706;">0 / 5</div>
+            <div class="metric-lbl">Overall Average</div>
+          </div>
+        </div>
+        <div class="metric-card">
+          <div>
+            <div class="metric-val" id="metric-top" style="font-size: 1.1rem;">N/A</div>
+            <div class="metric-lbl">Top Rated Faculty</div>
+          </div>
+        </div>
+        <div class="metric-card">
+          <div>
+            <div class="metric-val" id="metric-courses">0</div>
+            <div class="metric-lbl">Courses Rated</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Faculty Report Table -->
+      <h3 style="font-size: 1.1rem; margin-bottom: 12px; font-family: var(--font-heading);">Faculty Performance Summary Table</h3>
+      <table class="table" style="margin-bottom: 24px;">
+        <thead>
+          <tr>
+            <th>Faculty Name</th>
+            <th>Subject</th>
+            <th>Total Feedbacks</th>
+            <th>Avg Rating</th>
+          </tr>
+        </thead>
+        <tbody id="faculty-table-body">
+          <tr><td colSpan="4" style="text-align: center; color: var(--text-secondary);">No feedback data available</td></tr>
+        </tbody>
+      </table>
+
+      <!-- Submissions Table -->
+      <h3 style="font-size: 1.1rem; margin-bottom: 12px; font-family: var(--font-heading);">Raw Feedback Records (MongoDB)</h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Reg No</th>
+            <th>Student Name</th>
+            <th>Subject</th>
+            <th>Faculty</th>
+            <th>Rating</th>
+            <th>Queries / Suggestions</th>
+          </tr>
+        </thead>
+        <tbody id="records-table-body">
+          <tr><td colSpan="6" style="text-align: center; color: var(--text-secondary);">Loading records...</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+  </div>
+
+  <!-- Toast Alert -->
+  <div id="toast" class="toast">Feedback Submitted Successfully!</div>
+
+  <script>
+    let selectedRating = 0;
+    let rawFeedbacks = [];
+
+    function showTab(tab) {
+      document.getElementById('section-form').style.display = tab === 'form' ? 'block' : 'none';
+      document.getElementById('section-report').style.display = tab === 'report' ? 'block' : 'none';
+
+      document.getElementById('tab-form-btn').classList.toggle('active', tab === 'form');
+      document.getElementById('tab-report-btn').classList.toggle('active', tab === 'report');
+
+      if (tab === 'report') {
+        fetchReportData();
+      }
+    }
+
+    function setRating(val) {
+      selectedRating = val;
+      const buttons = document.querySelectorAll('.star-btn');
+      buttons.forEach((btn, i) => {
+        btn.classList.toggle('active', i < val);
+      });
+      const labels = ['1 / 5 - Poor', '2 / 5 - Fair', '3 / 5 - Good', '4 / 5 - Very Good', '5 / 5 - Excellent'];
+      document.getElementById('rating-text').innerText = labels[val - 1] || 'Select rating out of 5';
+    }
+
+    function resetForm() {
+      document.getElementById('feedback-form').reset();
+      selectedRating = 0;
+      setRating(0);
+      document.getElementById('rating-text').innerText = 'Select rating out of 5';
+    }
+
+    async function handleFormSubmit(e) {
+      e.preventDefault();
+
+      const regNo = document.getElementById('regNo').value.trim();
+      const studentName = document.getElementById('studentName').value.trim();
+      const clgEmail = document.getElementById('clgEmail').value.trim();
+      const phnNo = document.getElementById('phnNo').value.trim();
+      const subject = document.getElementById('subject').value;
+      const faculty = document.getElementById('faculty').value;
+      const queriesSuggestions = document.getElementById('queriesSuggestions').value.trim();
+
+      if (!regNo || !studentName || !clgEmail || !phnNo || !subject || !faculty || selectedRating === 0) {
+        showToast('Please fill out all required fields marked with *', true);
+        return;
+      }
+
+      const payload = {
+        regNo,
+        studentName,
+        clgEmail,
+        phnNo,
+        subject,
+        faculty,
+        rating: selectedRating,
+        queriesSuggestions
+      };
+
+      try {
+        const res = await fetch('/api/feedback', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await res.json();
+        if (res.ok && data.success) {
+          showToast('Feedback saved to MongoDB successfully!');
+          resetForm();
+          showTab('report');
+        } else {
+          showToast(data.message || 'Error submitting feedback', true);
+        }
+      } catch (err) {
+        showToast('Server connection error', true);
+      }
+    }
+
+    async function fetchReportData() {
+      try {
+        const res = await fetch('/api/feedback/report');
+        const data = await res.json();
+
+        if (data.success) {
+          document.getElementById('metric-total').innerText = data.summary.totalFeedbacks;
+          document.getElementById('metric-avg').innerText = data.summary.overallAverageRating + ' / 5';
+          document.getElementById('metric-top').innerText = data.summary.topFaculty;
+          document.getElementById('metric-courses').innerText = data.summary.totalSubjects;
+
+          // Render Faculty Table
+          const facBody = document.getElementById('faculty-table-body');
+          if (data.facultyReport.length === 0) {
+            facBody.innerHTML = '<tr><td colSpan="4" style="text-align: center; color: var(--text-secondary);">No feedback data available</td></tr>';
+          } else {
+            facBody.innerHTML = data.facultyReport.map(f => `
+              <tr>
+                <td><strong>${f.faculty}</strong></td>
+                <td>${f.subject}</td>
+                <td>${f.totalFeedback} votes</td>
+                <td style="color: #d97706; font-weight: 700;">★ ${f.avgRating} / 5</td>
+              </tr>
+            `).join('');
+          }
+        }
+
+        // Fetch raw list
+        const resList = await fetch('/api/feedback');
+        const dataList = await resList.json();
+        if (dataList.success) {
+          rawFeedbacks = dataList.data;
+          const recBody = document.getElementById('records-table-body');
+          if (rawFeedbacks.length === 0) {
+            recBody.innerHTML = '<tr><td colSpan="6" style="text-align: center; color: var(--text-secondary);">No records found</td></tr>';
+          } else {
+            recBody.innerHTML = rawFeedbacks.map(r => `
+              <tr>
+                <td style="color: var(--primary); font-weight: 700;">${r.regNo}</td>
+                <td><strong>${r.studentName}</strong><br><small style="color: var(--text-secondary);">${r.clgEmail}</small></td>
+                <td>${r.subject}</td>
+                <td>${r.faculty}</td>
+                <td style="color: #d97706; font-weight: 700;">★ ${r.rating} / 5</td>
+                <td>${r.queriesSuggestions || '<em>None</em>'}</td>
+              </tr>
+            `).join('');
+          }
+        }
+
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    async function seedDemoData() {
+      try {
+        const res = await fetch('/api/feedback/seed', { method: 'POST' });
+        const data = await res.json();
+        if (data.success) {
+          showToast(data.message);
+          fetchReportData();
+        }
+      } catch (err) {
+        showToast('Error seeding data', true);
+      }
+    }
+
+    function exportCSV() {
+      if (rawFeedbacks.length === 0) {
+        showToast('No feedback records to export', true);
+        return;
+      }
+      const headers = ['Reg No', 'Student Name', 'College Email', 'Phone', 'Subject', 'Faculty', 'Rating', 'Suggestions'];
+      const rows = [headers.join(',')];
+      rawFeedbacks.forEach(f => {
+        rows.push([
+          `"${f.regNo}"`,
+          `"${f.studentName}"`,
+          `"${f.clgEmail}"`,
+          `"${f.phnNo}"`,
+          `"${f.subject}"`,
+          `"${f.faculty}"`,
+          f.rating,
+          `"${(f.queriesSuggestions || '').replace(/"/g, '""')}"`
+        ].join(','));
+      });
+      const blob = new Blob([rows.join('\n')], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Feedback_Report_${new Date().toISOString().slice(0,10)}.csv`;
+      a.click();
+      showToast('CSV downloaded successfully!');
+    }
+
+    function showToast(msg, isError = false) {
+      const toast = document.getElementById('toast');
+      toast.innerText = msg;
+      toast.style.borderLeftColor = isError ? 'var(--accent-rose)' : 'var(--accent-emerald)';
+      toast.style.display = 'block';
+      setTimeout(() => { toast.style.display = 'none'; }, 3500);
+    }
+  </script>
+</body>
+</html>
