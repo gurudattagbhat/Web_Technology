@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Guru's Hospital - Advanced Care, Diagnostic Center & Healthcare Management System. Book appointments with specialist doctors and access digital health records." />
+  <title>Guru's Hospital | Advanced Care & Healthcare Management System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="background-orb background-orb--one"></div>
+  <div class="background-orb background-orb--two"></div>
+
+  <main class="shell">
+    <!-- Navbar Header -->
+    <header class="navbar card">
+      <a class="brand" href="#home" aria-label="Guru's Hospital home">
+        <span class="brand__mark">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 10.5V6.75C19 5.23122 17.7688 4 16.25 4H7.75C6.23122 4 5 5.23122 5 6.75V17.25C5 18.7688 6.23122 20 7.75 20H16.25C17.7688 20 19 18.7688 19 17.25V13.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M10 12H14M12 10V14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <span class="brand__text">
+          <strong>Guru's Hospital</strong>
+          <small>Multi-Specialty & Diagnostics</small>
+        </span>
+      </a>
+
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <div class="nav-menu" id="nav-menu">
+        <nav class="nav-links" aria-label="Primary navigation">
+          <a href="#home" class="nav-link active">Home</a>
+          <a href="#services" class="nav-link">Services</a>
+          <a href="#diagnostics" class="nav-link">Diagnostics</a>
+          <a href="#doctors" class="nav-link">Doctors</a>
+          <a href="#facilities" class="nav-link">Facilities</a>
+          <a href="#reviews" class="nav-link">Reviews</a>
+          <a href="#faq" class="nav-link">FAQ</a>
+        </nav>
+
+        <div class="nav__actions">
+          <a class="button button--emergency-sm" href="tel:+919876543210">🚨 24/7 Helpline</a>
+          <a class="button button--ghost button--sm" href="signup.html">Sign Up</a>
+          <a class="nav__cta button button--sm" href="login.html">Portal Login</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero card">
+      <div class="hero__copy">
+        <span class="eyebrow">🏥 24/7 Multi-Specialty Hospital & Diagnostic Center</span>
+        <h1>Modern Healthcare Management, Simplified</h1>
+        <p>Streamline patient registration, doctor consultations, 3T MRI & pathology diagnostics, specialist queues, and encrypted digital health records in one unified system.</p>
+        
+        <div class="hero__actions">
+          <a class="button button--primary" href="login.html">Access Patient & Doctor Portal →</a>
+          <a class="button button--ghost" href="signup.html">Register New Patient</a>
+        </div>
+
+        <div class="hero__quick-links">
+          <span class="quick-title">Popular Specialties:</span>
+          <a href="#doctors" class="quick-chip">🫀 Cardiology</a>
+          <a href="#doctors" class="quick-chip">🧠 Neurology</a>
+          <a href="#doctors" class="quick-chip">👶 Pediatrics</a>
+          <a href="#doctors" class="quick-chip">🦴 Orthopedics</a>
+          <a href="#diagnostics" class="quick-chip">🔬 3T MRI Scan</a>
+        </div>
+
+        <div class="hero__status-pill card">
+          <span class="status-dot"></span>
+          <span id="system-status">System Operational • OPD & Emergency Active</span>
+        </div>
+      </div>
+
+      <div class="hero__showcase card">
+        <div class="hero__image-container">
+          <img src="images/hero_hospital.png" alt="Guru's Multi-Specialty Hospital Building" class="hero__img" />
+          <div class="hero__badge hero__badge--top">
+            <span class="badge-icon">🚑</span>
+            <div>
+              <strong>Level-1 Emergency Bay</strong>
+              <small>24/7 Trauma Response</small>
+            </div>
+          </div>
+          <div class="hero__badge hero__badge--bottom">
+            <span class="badge-icon">⭐</span>
+            <div>
+              <strong>4.9 / 5 Rating</strong>
+              <small>From 1,250+ Verified Patients</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero__quick-stats">
+          <div class="stat-pill">
+            <strong>24/7</strong>
+            <span>Emergency</span>
+          </div>
+          <div class="stat-pill">
+            <strong>45+</strong>
+            <span>Specialists</span>
+          </div>
+          <div class="stat-pill">
+            <strong>15 Min</strong>
+            <span>Avg OPD Wait</span>
+          </div>
+          <div class="stat-pill">
+            <strong>99.8%</strong>
+            <span>Care Satisfaction</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Emergency Callout Banner -->
+    <section class="emergency-banner card">
+      <div class="emergency-content">
+        <span class="emergency-badge">🚨 24/7 Emergency & ICU Hotline</span>
+        <h2>Medical Emergency or Immediate Care Needed?</h2>
+        <p>Our critical response trauma team and advanced life support ambulances are on standby round-the-clock.</p>
+      </div>
+      <div class="emergency-action">
+        <a class="button button--emergency" href="tel:+919876543210">📞 Emergency Call: +91 98765 43210</a>
+      </div>
+    </section>
+
+    <!-- Core Services / Modules -->
+    <section class="section-heading">
+      <div>
+        <span class="eyebrow">Comprehensive Healthcare</span>
+        <h2 id="services">Core Management Modules</h2>
+      </div>
+      <p>Integrated workflow solutions for patients, medical staff, and administrative teams.</p>
+    </section>
+
+    <section class="modules">
+      <article class="card module">
+        <div class="module-icon">🧑‍🤝‍🧑</div>
+        <h2>Patient Digital Records</h2>
+        <p>Seamless online registration, automated unique ID assignment (`PAT-...`), prescription archives, and encrypted diagnostic history.</p>
+      </article>
+      <article class="card module">
+        <div class="module-icon">🗓️</div>
+        <h2>Smart OPD Scheduling</h2>
+        <p>Real-time doctor appointment booking, queue status updates, automated slot confirmation, and instant check-in.</p>
+      </article>
+      <article class="card module">
+        <div class="module-icon">🩺</div>
+        <h2>Doctor & Specialist Hub</h2>
+        <p>Manage doctor duty rosters, clinical note entry, diagnostic test orders, and digital prescriptions (`DOC-...`).</p>
+      </article>
+      <article class="card module">
+        <div class="module-icon">💳</div>
+        <h2>Transparent Billing</h2>
+        <p>Automated invoice generation, itemized consultation & diagnostic test billing, and insurance claim tracking.</p>
+      </article>
+    </section>
+
+    <!-- Diagnostic & Advanced Imaging Center Section -->
+    <section class="section-heading">
+      <div>
+        <span class="eyebrow">State-of-The-Art Equipment</span>
+        <h2 id="diagnostics">Diagnostic & Imaging Center</h2>
+      </div>
+      <p>Precision diagnostic technologies for accurate medical evaluation and early detection.</p>
+    </section>
+
+    <section class="diagnostics-grid">
+      <article class="card diagnostic-card">
+        <div class="diagnostic-img-wrap">
+          <img src="images/diagnostic_mri.png" alt="3T MRI & Multi-Slice CT Scanner" class="diagnostic-img" />
+          <span class="diagnostic-tag">24/7 Scanning</span>
+        </div>
+        <div class="diagnostic-body">
+          <h3>3T High-Field MRI & CT Scan</h3>
+          <p class="diagnostic-desc">Sub-millimeter 3D imaging for brain, spine, joint, and cardiac angiography with AI-assisted clarity.</p>
+          <div class="diagnostic-meta">
+            <span>⏱️ 2-Hour Report Sync</span>
+            <span>📍 Diagnostic Suite 1</span>
+          </div>
+          <a href="login.html" class="button button--ghost button--sm button--full">Schedule Scan →</a>
+        </div>
+      </article>
+
+      <article class="card diagnostic-card">
+        <div class="diagnostic-img-wrap">
+          <img src="images/diagnostic_lab.png" alt="Automated Pathology & Biochemistry Laboratory" class="diagnostic-img" />
+          <span class="diagnostic-tag tag--purple">ISO Accredited</span>
+        </div>
+        <div class="diagnostic-body">
+          <h3>Pathology & Clinical Biochemistry</h3>
+          <p class="diagnostic-desc">Robotic automated hematology, liver/kidney panels, hormone bio-assays, and biopsy histopathology.</p>
+          <div class="diagnostic-meta">
+            <span>⏱️ Express 2-Hr Delivery</span>
+            <span>📍 Central Lab Block A</span>
+          </div>
+          <a href="login.html" class="button button--ghost button--sm button--full">Book Blood Test →</a>
+        </div>
+      </article>
+
+      <article class="card diagnostic-card">
+        <div class="diagnostic-img-wrap">
+          <img src="images/diagnostic_xray.png" alt="Digital Radiology & 3D X-Ray Suite" class="diagnostic-img" />
+          <span class="diagnostic-tag tag--blue">Ultra-Low Radiation</span>
+        </div>
+        <div class="diagnostic-body">
+          <h3>Digital Radiology & 3D X-Ray</h3>
+          <p class="diagnostic-desc">Full-body digital radiograph, DEXA bone density scans, and orthopedic stress imaging with instant cloud delivery.</p>
+          <div class="diagnostic-meta">
+            <span>⏱️ Instant Digital View</span>
+            <span>📍 Radiology Floor 1</span>
+          </div>
+          <a href="login.html" class="button button--ghost button--sm button--full">Book Radiology →</a>
+        </div>
+      </article>
+
+      <article class="card diagnostic-card">
+        <div class="diagnostic-img-wrap">
+          <img src="images/diagnostic_cardio.png" alt="Cardiac Cath Lab & Heart Diagnostic Station" class="diagnostic-img" />
+          <span class="diagnostic-tag tag--red">Cath Lab Ready</span>
+        </div>
+        <div class="diagnostic-body">
+          <h3>Cardiac Diagnostics & Cath Lab</h3>
+          <p class="diagnostic-desc">Color Doppler Echocardiography, Holter 24-hr monitoring, TMT Treadmill stress test & coronary catheterization.</p>
+          <div class="diagnostic-meta">
+            <span>⏱️ Immediate ECG Analysis</span>
+            <span>📍 Cardiac Wing B</span>
+          </div>
+          <a href="login.html" class="button button--ghost button--sm button--full">Book Cardiac Test →</a>
+        </div>
+      </article>
+    </section>
+
+    <!-- Specialist Doctors Section -->
+    <section class="section-heading">
+      <div>
+        <span class="eyebrow">Medical Staff</span>
+        <h2 id="doctors">Our Specialist Doctors</h2>
+      </div>
+      <p>Renowned medical practitioners dedicated to patient-centered clinical excellence.</p>
+    </section>
+
+    <section class="doctors-grid">
+      <article class="card doctor-card">
+        <div class="doctor-photo-wrap">
+          <img src="images/doctor_cardiology.png" alt="Dr. Rajesh Sharma - Senior Cardiologist" class="doctor-photo" />
+          <span class="doctor-status-badge status--active">🟢 OPD Active</span>
+          <span class="doctor-rating">★ 4.9</span>
+        </div>
+        <div class="doctor-info">
+          <h3>Dr. Rajesh Sharma</h3>
+          <p class="doctor-dept">Senior Cardiology Specialist</p>
+          <p class="doctor-exp">14+ Yrs Exp • MD, DM Cardiology (AIIMS)</p>
+          <p class="doctor-opd">📍 Room 102 • OPD: Mon - Sat (9 AM - 4 PM)</p>
+          <a class="button button--primary button--full" href="login.html">Book Consultation</a>
+        </div>
+      </article>
+
+      <article class="card doctor-card">
+        <div class="doctor-photo-wrap">
+          <img src="images/doctor_neurology.png" alt="Dr. Ananya Patel - Senior Neurologist" class="doctor-photo" />
+          <span class="doctor-status-badge status--active">🟢 Available Today</span>
+          <span class="doctor-rating">★ 4.9</span>
+        </div>
+        <div class="doctor-info">
+          <h3>Dr. Ananya Patel</h3>
+          <p class="doctor-dept">Neurology & Stroke Specialist</p>
+          <p class="doctor-exp">11+ Yrs Exp • MD, DM Neurology</p>
+          <p class="doctor-opd">📍 Room 204 • OPD: Mon - Fri (10 AM - 5 PM)</p>
+          <a class="button button--primary button--full" href="login.html">Book Consultation</a>
+        </div>
+      </article>
+
+      <article class="card doctor-card">
+        <div class="doctor-photo-wrap">
+          <img src="images/doctor_pediatrics.png" alt="Dr. Vikram Verma - Chief Pediatrician" class="doctor-photo" />
+          <span class="doctor-status-badge status--active">🟢 Consult Ready</span>
+          <span class="doctor-rating">★ 4.8</span>
+        </div>
+        <div class="doctor-info">
+          <h3>Dr. Vikram Verma</h3>
+          <p class="doctor-dept">Pediatrics & Child Care Chief</p>
+          <p class="doctor-exp">9+ Yrs Exp • MD Pediatrics, DCH</p>
+          <p class="doctor-opd">📍 Child Care Wing 108 • OPD: Daily (8 AM - 2 PM)</p>
+          <a class="button button--primary button--full" href="login.html">Book Consultation</a>
+        </div>
+      </article>
+
+      <article class="card doctor-card">
+        <div class="doctor-photo-wrap">
+          <img src="images/doctor_orthopedics.png" alt="Dr. Priya Sundaram - Orthopedic Surgeon" class="doctor-photo" />
+          <span class="doctor-status-badge status--busy">🟡 In Surgery</span>
+          <span class="doctor-rating">★ 4.9</span>
+        </div>
+        <div class="doctor-info">
+          <h3>Dr. Priya Sundaram</h3>
+          <p class="doctor-dept">Orthopedics & Joint Surgeon</p>
+          <p class="doctor-exp">12+ Yrs Exp • MS Ortho, MCh (Spine)</p>
+          <p class="doctor-opd">📍 Surgery Block B • OPD: Mon, Wed, Fri (11 AM - 6 PM)</p>
+          <a class="button button--primary button--full" href="login.html">Book Consultation</a>
+        </div>
+      </article>
+    </section>
+
+    <!-- Hospital Facilities Spotlight Section -->
+    <section class="section-heading">
+      <div>
+        <span class="eyebrow">World-Class Infrastructure</span>
+        <h2 id="facilities">Clinical Facilities & Critical Care</h2>
+      </div>
+      <p>Modern medical infrastructure designed for maximum safety, comfort, and critical recovery.</p>
+    </section>
+
+    <section class="facility-showcase card">
+      <div class="facility-img-wrap">
+        <img src="images/facility_icu.png" alt="Advanced Intensive Care Unit (ICU)" class="facility-img" />
+        <div class="facility-badge">
+          <strong>Level-3 Critical Care ICU</strong>
+          <small>24/7 Dedicated Monitoring & Ventilator Support</small>
+        </div>
+      </div>
+      <div class="facility-details">
+        <h2>Hospital Infrastructure Highlights</h2>
+        <p>Built according to international clinical protocols with sterile airflow systems and round-the-clock emergency preparedness.</p>
+
+        <div class="facility-list">
+          <div class="facility-item">
+            <span class="facility-icon">🏥</span>
+            <div>
+              <strong>24/7 Level-1 Trauma Center</strong>
+              <p>Immediate triage, resuscitation bays, and emergency surgical teams.</p>
+            </div>
+          </div>
+          <div class="facility-item">
+            <span class="facility-icon">🔪</span>
+            <div>
+              <strong>Modular Operation Suites</strong>
+              <p>Ultra-clean laminar air flow surgical suites with HD laparoscopic units.</p>
+            </div>
+          </div>
+          <div class="facility-item">
+            <span class="facility-icon">💊</span>
+            <div>
+              <strong>In-House Pharmacy & Blood Storage</strong>
+              <p>24/7 medicine dispensing and temperature-controlled blood bank.</p>
+            </div>
+          </div>
+          <div class="facility-item">
+            <span class="facility-icon">🛏️</span>
+            <div>
+              <strong>Deluxe Private Patient Suites</strong>
+              <p>Ergonomic electric beds, nurse call buttons, and patient family amenities.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEW Patient Testimonials & Trust Section -->
+    <section class="section-heading">
+      <div>
+        <span class="eyebrow">Verified Care Stories</span>
+        <h2 id="reviews">Patient Reviews & Experiences</h2>
+      </div>
+      <p>Hear from real patients who experienced our compassionate clinical care and digital management.</p>
+    </section>
+
+    <section class="testimonials-grid">
+      <article class="card testimonial-card">
+        <div class="testimonial-header">
+          <div class="patient-avatar avatar--blue">AM</div>
+          <div>
+            <strong>Aarav Mehta</strong>
+            <small>Cardiology Patient • Verified Care</small>
+          </div>
+          <span class="testimonial-stars">★★★★★</span>
+        </div>
+        <p class="testimonial-quote">"Extremely smooth OPD queue management! Dr. Rajesh Sharma diagnosed my cardiac symptoms promptly and saved valuable time during emergency triage."</p>
+      </article>
+
+      <article class="card testimonial-card">
+        <div class="testimonial-header">
+          <div class="patient-avatar avatar--purple">SR</div>
+          <div>
+            <strong>Sunita Rao</strong>
+            <small>Radiology Patient • Verified Care</small>
+          </div>
+          <span class="testimonial-stars">★★★★★</span>
+        </div>
+        <p class="testimonial-quote">"The 3T MRI report was synced directly to my patient dashboard within 2 hours. High-tech equipment and wonderful, attentive nursing staff!"</p>
+      </article>
+
+      <article class="card testimonial-card">
+        <div class="testimonial-header">
+          <div class="patient-avatar avatar--green">RV</div>
+          <div>
+            <strong>Rohan Verma</strong>
+            <small>Orthopedic Surgery • Verified Care</small>
+          </div>
+          <span class="testimonial-stars">★★★★★</span>
+        </div>
+        <p class="testimonial-quote">"Clean hospital suites, fast digital registration, and transparent billing. Dr. Priya Sundaram's knee surgery procedure gave me complete mobility."</p>
+      </article>
+    </section>
+
+    <!-- NEW Frequently Asked Questions (FAQ) Section -->
+    <section class="section-heading">
+      <div>
+        <span class="eyebrow">Patient Help Desk</span>
+        <h2 id="faq">Frequently Asked Questions</h2>
+      </div>
+      <p>Quick answers to common questions about appointments, diagnostics, and emergency care.</p>
+    </section>
+
+    <section class="faq-container card">
+      <details class="faq-item" open>
+        <summary class="faq-question">
+          <span>How do I book an OPD consultation with a specialist doctor?</span>
+          <span class="faq-icon">+</span>
+        </summary>
+        <p class="faq-answer">You can easily book online by creating an account or logging into the Portal. Select your preferred doctor, pick an available OPD time slot, and receive instant confirmation with your unique Patient ID.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-question">
+          <span>How fast are diagnostic test reports delivered?</span>
+          <span class="faq-icon">+</span>
+        </summary>
+        <p class="faq-answer">Routine pathology blood tests and digital X-rays are synced to your online patient dashboard within 2 to 4 hours. Special MRI and CT scans are verified by senior radiologists within 4 to 6 hours.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-question">
+          <span>What should I do in case of a late-night emergency?</span>
+          <span class="faq-icon">+</span>
+        </summary>
+        <p class="faq-answer">Call our 24/7 Emergency Line immediately at <strong>+91 98765 43210</strong>. Our Level-1 Trauma Center and emergency resuscitation team are active 24 hours a day, 365 days a year.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-question">
+          <span>Are health insurance cashless claims accepted?</span>
+          <span class="faq-icon">+</span>
+        </summary>
+        <p class="faq-answer">Yes, our TPA Insurance Desk supports hassle-free cashless claims with over 30+ major healthcare insurance providers for both planned surgeries and emergency hospital admissions.</p>
+      </details>
+    </section>
+
+    <!-- Key Features & Security -->
+    <section class="section-heading">
+      <div>
+        <span class="eyebrow">Enterprise Grade</span>
+        <h2 id="features">Built for Security & Speed</h2>
+      </div>
+      <p>Reliable cloud infrastructure compliant with modern patient privacy standards.</p>
+    </section>
+
+    <section class="features-grid">
+      <article class="card feature-card">
+        <div class="feature-icon">🔒</div>
+        <h3>Encrypted Health Records</h3>
+        <p>Full data encryption for patient diagnostics, prescription history, and billing records.</p>
+      </article>
+      <article class="card feature-card">
+        <div class="feature-icon">🆔</div>
+        <h3>Automated Unique ID System</h3>
+        <p>Instant date & cryptographically generated identifiers (`PAT-...`, `DOC-...`) for tracking.</p>
+      </article>
+      <article class="card feature-card">
+        <div class="feature-icon">📱</div>
+        <h3>Cross-Platform Portal</h3>
+        <p>Seamless responsive access on desktop monitors, clinical tablets, and mobile devices.</p>
+      </article>
+    </section>
+
+    <!-- Support & Portal Access -->
+    <section id="contact" class="support-grid">
+      <article class="card support-card">
+        <h2>Hospital Contact & OPD Location</h2>
+        <p><strong>Emergency Hotline:</strong> +91 98765 43210 (24/7)</p>
+        <p><strong>OPD Appointment Desk:</strong> +91 98765 12345</p>
+        <p><strong>Email Desk:</strong> care@gurushospital.com</p>
+        <p><strong>Location:</strong> Plot 42, Medical Zone Avenue, City Center, Metro City</p>
+        <p><strong>OPD Timings:</strong> Mon - Sat: 8:00 AM - 8:00 PM | Sun Emergency Only</p>
+      </article>
+
+      <article class="card support-card highlight-card">
+        <h2>Access Portal</h2>
+        <p>Secure login portals for registered patients, doctors, and clinical care staff.</p>
+        <div class="support-actions">
+          <a class="button button--primary" href="login.html">Sign In to Portal</a>
+          <a class="button button--ghost" href="signup.html">Create New Account</a>
+        </div>
+      </article>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer card">
+      <div class="footer-brand">
+        <span class="brand__mark">G</span>
+        <div>
+          <strong>Guru's Hospital</strong>
+          <small>© 2026 Guru's Hospital Care & Management System. All rights reserved.</small>
+        </div>
+      </div>
+      <div class="footer-links">
+        <a href="#home">Home</a>
+        <a href="#services">Services</a>
+        <a href="#diagnostics">Diagnostics</a>
+        <a href="#doctors">Doctors</a>
+        <a href="#facilities">Facilities</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#faq">FAQ</a>
+        <a href="login.html">Portal Login</a>
+        <a href="signup.html">Sign Up</a>
+      </div>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

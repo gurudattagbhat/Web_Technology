@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guru's Hospital | Login</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="auth-page">
+  <div class="background-orb background-orb--one"></div>
+  <div class="background-orb background-orb--two"></div>
+
+  <main class="auth-shell">
+    <section class="auth-brand card">
+      <a class="brand brand--auth" href="index.html" aria-label="Guru's Hospital home">
+        <span class="brand__mark">G</span>
+        <span class="brand__text">
+          <strong>Guru's Hospital</strong>
+          <small>Patient & Doctor Portal</small>
+        </span>
+      </a>
+
+      <div class="auth-intro">
+        <span class="eyebrow">Secure Sign In</span>
+        <h1>Login to your care portal</h1>
+        <p class="auth-subtitle">Access your personalized health dashboard, manage appointment schedules, and view medical records with ease.</p>
+      </div>
+
+      <div class="auth-highlights">
+        <div class="highlight-item">
+          <div class="highlight-icon">🔒</div>
+          <div class="highlight-content">
+            <strong>Encrypted & Secure</strong>
+            <p>Your health data and identity remain safe and protected.</p>
+          </div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-icon">⚡</div>
+          <div class="highlight-content">
+            <strong>Real-time Dashboard</strong>
+            <p>Track doctor availability, prescriptions, and visit histories.</p>
+          </div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-icon">🩺</div>
+          <div class="highlight-content">
+            <strong>Tailored Portals</strong>
+            <p>Specialized tools designed specifically for patients and doctors.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="auth-links">
+        <a class="button button--ghost" href="index.html">← Back to home</a>
+        <a class="button button--primary" href="mailto:support@gurushospital.com">Need help?</a>
+      </div>
+    </section>
+
+    <section class="auth-panel card">
+      <div class="auth-switch" role="tablist" aria-label="Login type">
+        <button class="auth-switch__button is-active" type="button" data-target="patient-form" aria-selected="true">Patient Login</button>
+        <button class="auth-switch__button" type="button" data-target="doctor-form" aria-selected="false">Doctor Login</button>
+      </div>
+
+      <!-- Feedback Alert Box -->
+      <div id="auth-alert" class="auth-alert hidden" role="alert"></div>
+
+      <form id="patient-form" class="auth-form is-active" data-role="patient" action="#" method="post">
+        <div class="auth-form__header">
+          <h2>Patient Login</h2>
+          <p>Sign in using your registered email address.</p>
+        </div>
+
+        <label>
+          Email Address
+          <div class="input-wrapper">
+            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <input type="email" name="email" placeholder="patient@example.com" required />
+          </div>
+        </label>
+
+        <label>
+          Password
+          <div class="input-wrapper">
+            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <input type="password" name="password" placeholder="Enter your password" required />
+            <button type="button" class="password-toggle" aria-label="Toggle password visibility">
+              <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+        </label>
+
+        <div class="auth-form__actions">
+          <label class="auth-checkbox">
+            <input type="checkbox" name="rememberPatient" />
+            Remember me
+          </label>
+          <a href="#" onclick="showAlert('Password reset link sent if account exists.', 'success'); return false;">Forgot password?</a>
+        </div>
+
+        <button class="button button--primary button--full" type="submit">
+          <span class="btn-text">Sign in as Patient</span>
+        </button>
+      </form>
+
+      <form id="doctor-form" class="auth-form" data-role="doctor" action="#" method="post">
+        <div class="auth-form__header">
+          <h2>Doctor Login</h2>
+          <p>Sign in using your hospital credentials.</p>
+        </div>
+
+        <label>
+          Email Address
+          <div class="input-wrapper">
+            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <input type="email" name="email" placeholder="doctor@gurushospital.com" required />
+          </div>
+        </label>
+
+        <label>
+          Password
+          <div class="input-wrapper">
+            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <input type="password" name="password" placeholder="Enter your password" required />
+            <button type="button" class="password-toggle" aria-label="Toggle password visibility">
+              <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+        </label>
+
+        <div class="auth-form__actions">
+          <label class="auth-checkbox">
+            <input type="checkbox" name="rememberDoctor" />
+            Remember me
+          </label>
+          <a href="#" onclick="showAlert('Password reset link sent if account exists.', 'success'); return false;">Forgot password?</a>
+        </div>
+
+        <button class="button button--primary button--full" type="submit">
+          <span class="btn-text">Sign in as Doctor</span>
+        </button>
+      </form>
+
+      <p class="auth-panel__footer">New here? <a href="signup.html">Create an account</a></p>
+    </section>
+  </main>
+
+  <script>
+    const buttons = document.querySelectorAll('.auth-switch__button');
+    const forms = document.querySelectorAll('.auth-form');
+    const alertBox = document.getElementById('auth-alert');
+
+    function showAlert(message, type = 'error') {
+      alertBox.textContent = message;
+      alertBox.className = `auth-alert auth-alert--${type}`;
+    }
+
+    function clearAlert() {
+      alertBox.textContent = '';
+      alertBox.className = 'auth-alert hidden';
+    }
+
+    // Toggle Password Visibility
+    document.querySelectorAll('.password-toggle').forEach((toggleBtn) => {
+      toggleBtn.addEventListener('click', () => {
+        const input = toggleBtn.previousElementSibling;
+        if (input.type === 'password') {
+          input.type = 'text';
+          toggleBtn.classList.add('is-visible');
+        } else {
+          input.type = 'password';
+          toggleBtn.classList.remove('is-visible');
+        }
+      });
+    });
+
+    async function submitLogin(form) {
+      clearAlert();
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const btnText = submitBtn.querySelector('.btn-text');
+      const originalText = btnText.textContent;
+
+      const role = form.dataset.role;
+      const formData = new FormData(form);
+      const payload = {
+        email: formData.get('email'),
+        password: formData.get('password'),
+        role,
+      };
+
+      try {
+        submitBtn.disabled = true;
+        btnText.textContent = 'Signing in...';
+
+        const response = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(payload),
+        });
+
+        const result = await response.json();
+        if (!response.ok) {
+          throw new Error(result.message || 'Login failed');
+        }
+
+        showAlert(`${result.message} Welcome back, ${result.user.fullName}! Redirecting to dashboard...`, 'success');
+        localStorage.setItem('currentUser', JSON.stringify(result.user));
+
+        setTimeout(() => {
+          if (role === 'doctor') {
+            window.location.href = 'doctor-dashboard.html';
+          } else {
+            window.location.href = 'patient-dashboard.html';
+          }
+        }, 1200);
+        form.reset();
+      } catch (error) {
+        showAlert(error.message, 'error');
+      } finally {
+        submitBtn.disabled = false;
+        btnText.textContent = originalText;
+      }
+    }
+
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => {
+        clearAlert();
+        const targetId = button.dataset.target;
+
+        buttons.forEach((item) => {
+          const active = item === button;
+          item.classList.toggle('is-active', active);
+          item.setAttribute('aria-selected', active ? 'true' : 'false');
+        });
+
+        forms.forEach((form) => {
+          form.classList.toggle('is-active', form.id === targetId);
+        });
+      });
+    });
+
+    forms.forEach((form) => {
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        await submitLogin(form);
+      });
+    });
+  </script>
+</body>
+</html>

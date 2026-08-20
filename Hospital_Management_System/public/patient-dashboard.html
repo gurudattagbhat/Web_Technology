@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guru's Hospital | Patient Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="dashboard-page">
+  <div class="background-orb background-orb--one"></div>
+  <div class="background-orb background-orb--two"></div>
+
+  <div class="dashboard-shell">
+    <!-- Top Navigation Header -->
+    <header class="dash-navbar card">
+      <div class="brand brand--dash">
+        <a href="index.html" style="display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit;">
+          <span class="brand__mark">G</span>
+          <div class="brand__text">
+            <strong>Guru's Hospital</strong>
+            <small>Patient Health & Care Portal</small>
+          </div>
+        </a>
+      </div>
+
+      <div class="dash-user">
+        <div class="user-avatar" id="patient-avatar">PT</div>
+        <div class="user-info">
+          <strong id="patient-name">Patient User</strong>
+          <small id="patient-meta"><span id="patient-identifier">PAT-260810-0000</span> • <span class="blood-badge" id="patient-blood-badge">O+</span></small>
+        </div>
+        <a href="index.html" class="button button--ghost button--sm">Home</a>
+        <button class="button button--ghost button--sm" id="logout-btn">Sign Out</button>
+      </div>
+    </header>
+
+    <!-- Main Navigation Bar Tabs -->
+    <nav class="dash-tabs card" role="tablist">
+      <button class="dash-tab is-active" data-tab="overview">
+        <span>📊</span> Overview
+      </button>
+      <button class="dash-tab" data-tab="appointments">
+        <span>🗓️</span> My Appointments <span class="tab-badge" id="upcoming-badge">0</span>
+      </button>
+      <button class="dash-tab" data-tab="prescriptions">
+        <span>💊</span> My Prescriptions <span class="tab-badge" id="rx-badge">0</span>
+      </button>
+      <button class="dash-tab" data-tab="doctors">
+        <span>🩺</span> Find & Book Doctor
+      </button>
+      <button class="dash-tab" data-tab="profile">
+        <span>👤</span> My Profile
+      </button>
+    </nav>
+
+    <!-- Alert Message Box -->
+    <div id="dash-alert" class="auth-alert hidden" role="alert"></div>
+
+    <!-- TAB 1: OVERVIEW -->
+    <section id="tab-overview" class="dash-tab-content is-active">
+      <div class="stats-grid">
+        <article class="card stat-card">
+          <div class="stat-icon icon--blue">🗓️</div>
+          <div>
+            <strong id="stat-total-apt">0</strong>
+            <span>Total Visits</span>
+          </div>
+        </article>
+        <article class="card stat-card">
+          <div class="stat-icon icon--orange">⏳</div>
+          <div>
+            <strong id="stat-pending-apt">0</strong>
+            <span>Upcoming / Pending</span>
+          </div>
+        </article>
+        <article class="card stat-card">
+          <div class="stat-icon icon--green">💊</div>
+          <div>
+            <strong id="stat-prescriptions-count">0</strong>
+            <span>Prescriptions Issued</span>
+          </div>
+        </article>
+        <article class="card stat-card">
+          <div class="stat-icon icon--purple">🩸</div>
+          <div>
+            <strong id="stat-blood-group">O+</strong>
+            <span>Blood Group</span>
+          </div>
+        </article>
+      </div>
+
+      <div class="dash-split">
+        <!-- Recent Appointments Widget -->
+        <article class="card dash-widget">
+          <div class="widget-header flex-between">
+            <div>
+              <h3>Recent Visits & Bookings</h3>
+              <p class="widget-sub">Track your recent doctor consultations and status.</p>
+            </div>
+            <button class="button button--ghost button--sm" onclick="switchTab('appointments')">View All</button>
+          </div>
+          <div class="table-responsive" style="margin-top: 14px;">
+            <table class="dash-table">
+              <thead>
+                <tr>
+                  <th>Date & Time</th>
+                  <th>Doctor</th>
+                  <th>Reason</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="overview-apt-tbody">
+                <tr><td colspan="5" class="empty-cell">Loading appointments...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <!-- Quick Actions Panel -->
+        <article class="card dash-widget">
+          <h3>Quick Health Actions</h3>
+          <div class="quick-actions-list">
+            <button class="quick-btn" onclick="openBookModal()">
+              <span class="quick-icon">➕</span>
+              <div>
+                <strong>Book New Appointment</strong>
+                <small>Schedule consultation with a specialist</small>
+              </div>
+            </button>
+            <button class="quick-btn" onclick="switchTab('prescriptions')">
+              <span class="quick-icon">📄</span>
+              <div>
+                <strong>View Prescriptions</strong>
+                <small>Access active medications & Rx cards</small>
+              </div>
+            </button>
+            <button class="quick-btn" onclick="switchTab('doctors')">
+              <span class="quick-icon">🩺</span>
+              <div>
+                <strong>Find Specialist Doctor</strong>
+                <small>Browse hospital doctors by department</small>
+              </div>
+            </button>
+            <button class="quick-btn" onclick="switchTab('profile')">
+              <span class="quick-icon">⚙️</span>
+              <div>
+                <strong>Update Profile & Records</strong>
+                <small>Manage phone, age, & medical history</small>
+              </div>
+            </button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- TAB 2: MY APPOINTMENTS -->
+    <section id="tab-appointments" class="dash-tab-content">
+      <article class="card dash-widget">
+        <div class="widget-header flex-between flex-wrap">
+          <div>
+            <h3>All My Appointments</h3>
+            <p class="widget-sub">Manage upcoming visits, review past history, or cancel pending requests.</p>
+          </div>
+          <div class="action-btn-group">
+            <div class="filter-group">
+              <button class="filter-btn is-active" data-apt-filter="all" onclick="filterAppointments('all', this)">All</button>
+              <button class="filter-btn" data-apt-filter="pending" onclick="filterAppointments('pending', this)">Pending</button>
+              <button class="filter-btn" data-apt-filter="accepted" onclick="filterAppointments('accepted', this)">Accepted</button>
+              <button class="filter-btn" data-apt-filter="completed" onclick="filterAppointments('completed', this)">Completed</button>
+            </div>
+            <button class="button button--primary button--sm" onclick="openBookModal()">+ Book Appointment</button>
+          </div>
+        </div>
+
+        <div class="table-responsive" style="margin-top: 18px;">
+          <table class="dash-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Time Slot</th>
+                <th>Doctor</th>
+                <th>Reason</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="all-apt-tbody">
+              <tr><td colspan="6" class="empty-cell">Loading your appointments...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+    </section>
+
+    <!-- TAB 3: MY PRESCRIPTIONS -->
+    <section id="tab-prescriptions" class="dash-tab-content">
+      <article class="card dash-widget">
+        <div class="widget-header flex-between flex-wrap">
+          <div>
+            <h3>Digital Prescriptions & Medication Plans</h3>
+            <p class="widget-sub">Prescriptions issued to you by hospital doctors after consultations.</p>
+          </div>
+          <div style="width: min(280px, 100%);">
+            <input type="text" id="rx-search-input" placeholder="🔍 Search by doctor or medicine..." oninput="filterPrescriptions()" style="min-height: 42px; border-radius: 12px;" />
+          </div>
+        </div>
+
+        <div id="rx-list-container" class="rx-history-list">
+          <div class="empty-cell">Loading your prescriptions...</div>
+        </div>
+      </article>
+    </section>
+
+    <!-- TAB 4: FIND & BOOK DOCTOR -->
+    <section id="tab-doctors" class="dash-tab-content">
+      <article class="card dash-widget">
+        <div class="widget-header flex-between flex-wrap">
+          <div>
+            <h3>Hospital Specialist Directory</h3>
+            <p class="widget-sub">Select a specialist and book your consultation instantly.</p>
+          </div>
+          <div class="filter-group flex-wrap" id="dept-filter-group">
+            <button class="filter-btn is-active" onclick="filterDoctorsByDept('all', this)">All Depts</button>
+            <button class="filter-btn" onclick="filterDoctorsByDept('Cardiology', this)">Cardiology</button>
+            <button class="filter-btn" onclick="filterDoctorsByDept('Neurology', this)">Neurology</button>
+            <button class="filter-btn" onclick="filterDoctorsByDept('Orthopedics', this)">Orthopedics</button>
+            <button class="filter-btn" onclick="filterDoctorsByDept('Pediatrics', this)">Pediatrics</button>
+            <button class="filter-btn" onclick="filterDoctorsByDept('General Medicine', this)">General Medicine</button>
+          </div>
+        </div>
+
+        <div class="patient-doctor-grid" id="doctor-cards-grid">
+          <div class="empty-cell">Loading doctors directory...</div>
+        </div>
+      </article>
+    </section>
+
+    <!-- TAB 5: MY PROFILE -->
+    <section id="tab-profile" class="dash-tab-content">
+      <div class="profile-card-grid">
+        <article class="card profile-summary-box">
+          <div style="text-align: center;">
+            <div class="profile-avatar-large" id="profile-avatar-lg" style="margin: 0 auto 14px;">PT</div>
+            <h3 id="summary-full-name" style="margin: 0;">Patient User</h3>
+            <p id="summary-email" style="margin: 4px 0 0; color: var(--muted); font-size: 0.9rem;">patient@example.com</p>
+            <span class="code-tag" id="summary-identifier" style="margin-top: 10px; display: inline-block;">PAT-260810-0000</span>
+          </div>
+          <hr style="border: 0; border-top: 1px solid rgba(15,23,42,0.08); margin: 12px 0;" />
+          <div>
+            <p style="margin: 6px 0;"><strong>Blood Group:</strong> <span class="blood-badge" id="summary-blood">O+</span></p>
+            <p style="margin: 6px 0;"><strong>Age / Gender:</strong> <span id="summary-age-gender">30 yrs • Not specified</span></p>
+            <p style="margin: 6px 0;"><strong>Phone:</strong> <span id="summary-phone">+91 98765 00000</span></p>
+            <p style="margin: 6px 0;"><strong>Medical History:</strong></p>
+            <p id="summary-history" style="margin: 4px 0 0; color: var(--muted); font-size: 0.88rem; line-height: 1.4;">None reported</p>
+          </div>
+        </article>
+
+        <article class="card dash-widget">
+          <h3>Edit Personal Profile</h3>
+          <p class="widget-sub" style="margin-bottom: 20px;">Keep your contact details and medical history up to date for emergency reference.</p>
+          
+          <form id="profile-form" onsubmit="handleProfileSubmit(event)">
+            <div class="form-grid-2">
+              <label>
+                Full Name
+                <input type="text" id="prof-fullName" required />
+              </label>
+
+              <label>
+                Email Address (Registered)
+                <input type="email" id="prof-email" readonly style="background: rgba(15,23,42,0.04); cursor: not-allowed;" />
+              </label>
+            </div>
+
+            <div class="form-grid-2">
+              <label>
+                Age
+                <input type="number" id="prof-age" min="1" max="120" placeholder="e.g. 32" />
+              </label>
+
+              <label>
+                Gender
+                <select id="prof-gender">
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                  <option value="Not specified">Prefer not to say</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="form-grid-2">
+              <label>
+                Phone Number
+                <input type="text" id="prof-phone" placeholder="+91 98765 43210" />
+              </label>
+
+              <label>
+                Blood Group
+                <select id="prof-bloodGroup">
+                  <option value="A+">A+</option>
+                  <option value="A-">A-</option>
+                  <option value="B+">B+</option>
+                  <option value="B-">B-</option>
+                  <option value="O+">O+</option>
+                  <option value="O-">O-</option>
+                  <option value="AB+">AB+</option>
+                  <option value="AB-">AB-</option>
+                </select>
+              </label>
+            </div>
+
+            <label>
+              Medical History / Allergies / Notes
+              <textarea id="prof-medicalHistory" rows="3" placeholder="List any chronic conditions, allergies, or past surgeries..."></textarea>
+            </label>
+
+            <div style="display: flex; justify-content: flex-end; margin-top: 16px;">
+              <button class="button button--primary" type="submit" id="save-profile-btn">Save Profile Changes</button>
+            </div>
+          </form>
+        </article>
+      </div>
+    </section>
+  </div>
+
+  <!-- MODAL: BOOK APPOINTMENT -->
+  <div id="book-modal" class="modal-backdrop hidden">
+    <div class="modal-card card">
+      <div class="modal-header">
+        <div class="flex-align-center gap-10">
+          <div class="modal-icon">🗓️</div>
+          <div>
+            <h2 style="margin:0;">Book Doctor Consultation</h2>
+            <small style="color:var(--muted);">Select doctor, date, and preferred time slot</small>
+          </div>
+        </div>
+        <button class="modal-close" onclick="closeBookModal()">✕</button>
+      </div>
+
+      <form id="book-form" onsubmit="handleBookSubmit(event)">
+        <label>
+          Select Specialist Doctor
+          <select id="book-doctor" required>
+            <option value="">Loading doctors...</option>
+          </select>
+        </label>
+
+        <div class="form-grid-2">
+          <label>
+            Appointment Date
+            <input type="date" id="book-date" required />
+          </label>
+
+          <label>
+            Time Slot
+            <select id="book-timeslot" required>
+              <option value="09:00 AM - 09:30 AM">09:00 AM - 09:30 AM</option>
+              <option value="10:00 AM - 10:30 AM" selected>10:00 AM - 10:30 AM</option>
+              <option value="11:30 AM - 12:00 PM">11:30 AM - 12:00 PM</option>
+              <option value="02:00 PM - 02:30 PM">02:00 PM - 02:30 PM</option>
+              <option value="04:00 PM - 04:30 PM">04:00 PM - 04:30 PM</option>
+              <option value="05:30 PM - 06:00 PM">05:30 PM - 06:00 PM</option>
+            </select>
+          </label>
+        </div>
+
+        <label>
+          Reason for Visit / Symptoms
+          <textarea id="book-reason" rows="3" placeholder="Describe symptoms or reason for consultation (e.g. Heart checkup, BP monitoring, routine checkup...)" required></textarea>
+        </label>
+
+        <div class="modal-actions">
+          <button class="button button--ghost" type="button" onclick="closeBookModal()">Cancel</button>
+          <button class="button button--primary" type="submit" id="book-submit-btn">Confirm Booking</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: VIEW / PRINT PRESCRIPTION -->
+  <div id="rx-modal" class="modal-backdrop hidden">
+    <div class="modal-card rx-modal-paper card">
+      <div class="modal-header">
+        <div class="flex-align-center gap-10">
+          <div class="modal-icon">💊</div>
+          <div>
+            <h2 style="margin:0;">Official Medical Prescription</h2>
+            <small style="color:var(--muted);">Guru's Hospital Digital Health Record</small>
+          </div>
+        </div>
+        <button class="modal-close" onclick="closeRxModal()">✕</button>
+      </div>
+
+      <div class="rx-pad" id="printable-rx-content">
+        <div class="rx-header">
+          <div>
+            <h2 style="margin:0; color:#0d9488;">GURU'S HOSPITAL</h2>
+            <small style="color:#475569; font-weight:700;">Multi-Specialty Healthcare & Clinical Center</small>
+            <p style="margin:2px 0 0; font-size:0.8rem; color:#64748b;">Phone: +91 98765 43210 • Email: care@gurushospital.com</p>
+          </div>
+          <div style="text-align:right;">
+            <span class="code-tag" id="modal-rx-date">DATE: --</span>
+          </div>
+        </div>
+
+        <hr class="rx-divider" />
+
+        <div class="rx-patient-meta">
+          <div><strong>Patient Name:</strong> <span id="modal-rx-patient">--</span></div>
+          <div><strong>Attending Doctor:</strong> <span id="modal-rx-doctor">--</span></div>
+        </div>
+
+        <div style="margin-bottom:14px; background:rgba(13,148,136,0.06); padding:10px 14px; border-radius:12px;">
+          <strong>Diagnosis / Condition:</strong> <span id="modal-rx-diag" style="color:#0f766e; font-weight:700;">--</span>
+        </div>
+
+        <div class="rx-symbol">Rx</div>
+
+        <table class="rx-table">
+          <thead>
+            <tr>
+              <th>Medicine Name</th>
+              <th>Dosage</th>
+              <th>Frequency</th>
+              <th>Duration</th>
+            </tr>
+          </thead>
+          <tbody id="modal-rx-meds-tbody">
+            <tr><td colspan="4">No medicines listed</td></tr>
+          </tbody>
+        </table>
+
+        <div class="rx-advice">
+          <strong>Doctor's Notes & Advice:</strong>
+          <p id="modal-rx-notes" style="margin:4px 0 0; color:#334155; font-style:italic;">None</p>
+        </div>
+
+        <div class="rx-footer">
+          <div>Verified Digital Signature</div>
+          <div>Authorized Medical Practitioner</div>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="button button--ghost" onclick="closeRxModal()">Close</button>
+        <button class="button button--primary" onclick="window.print()">🖨️ Print Prescription</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // System State & Auth Handling
+    let currentUser = null;
+    let cachedAppointments = [];
+    let cachedPrescriptions = [];
+    let cachedDoctors = [];
+    let currentAptFilter = 'all';
+
+    const alertBox = document.getElementById('dash-alert');
+
+    function showAlert(message, type = 'success') {
+      alertBox.textContent = message;
+      alertBox.className = `auth-alert auth-alert--${type}`;
+      alertBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      setTimeout(() => {
+        alertBox.className = 'auth-alert hidden';
+      }, 4000);
+    }
+
+    function initUserSession() {
+      const stored = localStorage.getItem('currentUser');
+      if (stored) {
+        try {
+          currentUser = JSON.parse(stored);
+        } catch (e) {
+          console.warn('Session parse error:', e);
+        }
+      }
+
+      // Default demo fallback if patient user visits directly without logging in
+      if (!currentUser || currentUser.role !== 'patient') {
+        currentUser = {
+          id: 'p1',
+          fullName: 'Rohan Sharma',
+          email: 'rohan.sharma@example.com',
+          role: 'patient',
+          identifier: 'PAT-260810-A1B2'
+        };
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+      }
+
+      // Update UI Header
+      document.getElementById('patient-name').textContent = currentUser.fullName;
+      document.getElementById('patient-identifier').textContent = currentUser.identifier || 'PAT-USER';
+      
+      const initials = currentUser.fullName.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+      document.getElementById('patient-avatar').textContent = initials || 'PT';
+      document.getElementById('profile-avatar-lg').textContent = initials || 'PT';
+      document.getElementById('summary-full-name').textContent = currentUser.fullName;
+      document.getElementById('summary-email').textContent = currentUser.email;
+      document.getElementById('summary-identifier').textContent = currentUser.identifier || 'PAT-USER';
+      document.getElementById('prof-fullName').value = currentUser.fullName;
+      document.getElementById('prof-email').value = currentUser.email;
+    }
+
+    // Tab Switching
+    function switchTab(tabName) {
+      document.querySelectorAll('.dash-tab').forEach((tab) => {
+        const active = tab.dataset.tab === tabName;
+        tab.classList.toggle('is-active', active);
+      });
+
+      document.querySelectorAll('.dash-tab-content').forEach((sec) => {
+        sec.classList.toggle('is-active', sec.id === `tab-${tabName}`);
+      });
+
+      if (tabName === 'appointments') loadAppointments();
+      if (tabName === 'prescriptions') loadPrescriptions();
+      if (tabName === 'doctors') loadDoctors();
+      if (tabName === 'profile') loadProfile();
+    }
+
+    document.querySelectorAll('.dash-tab').forEach((btn) => {
+      btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+    });
+
+    // 1. APPOINTMENTS
+    async function loadAppointments() {
+      if (!currentUser) return;
+      try {
+        const response = await fetch(`/api/appointments?patientEmail=${encodeURIComponent(currentUser.email)}`);
+        const data = await response.json();
+        cachedAppointments = data.appointments || [];
+
+        renderStats();
+        renderOverviewTable();
+        renderAppointmentsTable();
+      } catch (err) {
+        console.error('Failed to load appointments:', err);
+      }
+    }
+
+    function renderStats() {
+      const total = cachedAppointments.length;
+      const pending = cachedAppointments.filter(a => a.status === 'pending' || a.status === 'accepted').length;
+      
+      document.getElementById('stat-total-apt').textContent = total;
+      document.getElementById('stat-pending-apt').textContent = pending;
+      document.getElementById('upcoming-badge').textContent = pending;
+    }
+
+    function getStatusBadgeHtml(status) {
+      const map = {
+        pending: '<span class="badge badge--pending">⏳ Pending</span>',
+        accepted: '<span class="badge badge--accepted">🔵 Confirmed</span>',
+        completed: '<span class="badge badge--completed">✅ Completed</span>',
+        cancelled: '<span class="badge badge--cancelled">❌ Cancelled</span>',
+      };
+      return map[status] || `<span class="badge">${status}</span>`;
+    }
+
+    function renderOverviewTable() {
+      const tbody = document.getElementById('overview-apt-tbody');
+      if (cachedAppointments.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" class="empty-cell">No appointments booked yet. Click "Book New Appointment" to get started.</td></tr>';
+        return;
+      }
+
+      const recent = cachedAppointments.slice(0, 5);
+      tbody.innerHTML = recent.map(apt => `
+        <tr>
+          <td><strong>${apt.date}</strong><br/><small class="text-muted">${apt.timeSlot}</small></td>
+          <td><strong>${apt.doctorName || 'Dr. Specialist'}</strong></td>
+          <td>${apt.reason}</td>
+          <td>${getStatusBadgeHtml(apt.status)}</td>
+          <td>
+            ${apt.status === 'pending' 
+              ? `<button class="button button--ghost button--sm" style="color:#b91c1c;" onclick="cancelAppointment('${apt._id}')">Cancel</button>`
+              : `<span class="text-muted">—</span>`
+            }
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function filterAppointments(filter, btn) {
+      currentAptFilter = filter;
+      document.querySelectorAll('[data-apt-filter]').forEach(b => b.classList.remove('is-active'));
+      if (btn) btn.classList.add('is-active');
+      renderAppointmentsTable();
+    }
+
+    function renderAppointmentsTable() {
+      const tbody = document.getElementById('all-apt-tbody');
+      let filtered = cachedAppointments;
+      if (currentAptFilter !== 'all') {
+        filtered = cachedAppointments.filter(a => a.status === currentAptFilter);
+      }
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="empty-cell">No appointments found matching filter "${currentAptFilter}".</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(apt => `
+        <tr>
+          <td><strong>${apt.date}</strong></td>
+          <td><span class="code-tag">${apt.timeSlot}</span></td>
+          <td><strong>${apt.doctorName || 'Dr. Specialist'}</strong></td>
+          <td>${apt.reason}</td>
+          <td>${getStatusBadgeHtml(apt.status)}</td>
+          <td>
+            ${apt.status === 'pending'
+              ? `<button class="button button--ghost button--sm" style="color:#b91c1c;" onclick="cancelAppointment('${apt._id}')">Cancel Request</button>`
+              : `<span class="text-muted">—</span>`
+            }
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    async function cancelAppointment(id) {
+      if (!confirm('Are you sure you want to cancel this appointment request?')) return;
+      try {
+        const response = await fetch(`/api/appointments/${id}/status`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status: 'cancelled' }),
+        });
+        const res = await response.json();
+        if (!response.ok) throw new Error(res.message);
+        showAlert('Appointment request cancelled successfully.');
+        loadAppointments();
+      } catch (err) {
+        showAlert(err.message, 'error');
+      }
+    }
+
+    // 2. PRESCRIPTIONS
+    async function loadPrescriptions() {
+      if (!currentUser) return;
+      try {
+        const response = await fetch(`/api/prescriptions?patientEmail=${encodeURIComponent(currentUser.email)}`);
+        const data = await response.json();
+        cachedPrescriptions = data.prescriptions || [];
+
+        document.getElementById('stat-prescriptions-count').textContent = cachedPrescriptions.length;
+        document.getElementById('rx-badge').textContent = cachedPrescriptions.length;
+
+        renderPrescriptionsList(cachedPrescriptions);
+      } catch (err) {
+        console.error('Failed to load prescriptions:', err);
+      }
+    }
+
+    function renderPrescriptionsList(list) {
+      const container = document.getElementById('rx-list-container');
+      if (list.length === 0) {
+        container.innerHTML = '<div class="empty-cell">No digital prescriptions issued yet. After consultation, your doctor will issue your electronic Rx here.</div>';
+        return;
+      }
+
+      container.innerHTML = list.map((p, idx) => {
+        const dateStr = p.createdAt ? new Date(p.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : 'Recent';
+        return `
+          <article class="rx-card-item card">
+            <div class="rx-card-header">
+              <div>
+                <strong style="font-size:1.1rem; color:var(--text);">${p.doctorName}</strong>
+                <span class="text-muted" style="margin-left:8px;">(${dateStr})</span>
+              </div>
+              <button class="button button--ghost button--sm" onclick="openRxModalByIndex(${idx})">🖨️ View & Print Rx</button>
+            </div>
+            
+            <p class="rx-card-diag"><strong>Diagnosis:</strong> <span style="color:var(--primary-strong); font-weight:700;">${p.diagnosis}</span></p>
+
+            <div class="rx-med-chips">
+              ${(p.medicines || []).map(m => `<span class="med-chip">💊 ${m.name} (${m.dosage} - ${m.frequency})</span>`).join('')}
+            </div>
+
+            ${p.notes ? `<p class="text-muted" style="margin:4px 0 0;"><em>Notes: ${p.notes}</em></p>` : ''}
+          </article>
+        `;
+      }).join('');
+    }
+
+    function filterPrescriptions() {
+      const query = document.getElementById('rx-search-input').value.toLowerCase();
+      const filtered = cachedPrescriptions.filter(p => 
+        p.doctorName.toLowerCase().includes(query) ||
+        p.diagnosis.toLowerCase().includes(query) ||
+        (p.medicines || []).some(m => m.name.toLowerCase().includes(query))
+      );
+      renderPrescriptionsList(filtered);
+    }
+
+    function openRxModalByIndex(idx) {
+      const p = cachedPrescriptions[idx];
+      if (!p) return;
+
+      document.getElementById('modal-rx-date').textContent = `DATE: ${p.createdAt ? new Date(p.createdAt).toLocaleDateString() : new Date().toLocaleDateString()}`;
+      document.getElementById('modal-rx-patient').textContent = `${p.patientName} (${currentUser.identifier || 'PAT'})`;
+      document.getElementById('modal-rx-doctor').textContent = p.doctorName;
+      document.getElementById('modal-rx-diag').textContent = p.diagnosis;
+      document.getElementById('modal-rx-notes').textContent = p.notes || 'Take medicines regularly as prescribed. Drink plenty of water and follow healthy diet.';
+
+      const tbody = document.getElementById('modal-rx-meds-tbody');
+      tbody.innerHTML = (p.medicines || []).map(m => `
+        <tr>
+          <td><strong>${m.name}</strong></td>
+          <td>${m.dosage || '1 tablet'}</td>
+          <td>${m.frequency || 'Twice daily'}</td>
+          <td>${m.duration || '5 days'}</td>
+        </tr>
+      `).join('');
+
+      document.getElementById('rx-modal').classList.remove('hidden');
+    }
+
+    function closeRxModal() {
+      document.getElementById('rx-modal').classList.add('hidden');
+    }
+
+    // 3. DOCTORS DIRECTORY
+    async function loadDoctors() {
+      try {
+        const response = await fetch('/api/doctors');
+        const data = await response.json();
+        cachedDoctors = data.doctors || [];
+        renderDoctorsGrid(cachedDoctors);
+        populateDoctorDropdown(cachedDoctors);
+        return cachedDoctors;
+      } catch (err) {
+        console.error('Failed to load doctors:', err);
+        return [];
+      }
+    }
+
+    function populateDoctorDropdown(doctors) {
+      const select = document.getElementById('book-doctor');
+      if (!doctors || doctors.length === 0) {
+        select.innerHTML = '<option value="">No doctors available</option>';
+        return;
+      }
+      select.innerHTML = doctors.map(d => `<option value="${d.email}">${d.fullName} — ${d.department} (${d.experience || 'Specialist'})</option>`).join('');
+    }
+
+    function renderDoctorsGrid(doctors) {
+      const container = document.getElementById('doctor-cards-grid');
+      if (!doctors || doctors.length === 0) {
+        container.innerHTML = '<div class="empty-cell">No doctors available at the moment.</div>';
+        return;
+      }
+
+      container.innerHTML = doctors.map(d => `
+        <article class="card dash-widget">
+          <div class="doc-card-header">
+            <div class="doc-avatar-circle">${d.image || 'DR'}</div>
+            <div>
+              <h3 style="margin:0; font-size:1.1rem;">${d.fullName}</h3>
+              <span class="doc-badge-dept">${d.department}</span>
+            </div>
+          </div>
+          <p class="text-muted" style="margin:0 0 10px;">${d.qualification || 'MD Specialist'} • ${d.experience || '10+ Years'} Exp</p>
+          <div class="flex-between" style="margin-top:14px;">
+            <span style="font-weight:800; color:#ea580c;">★ ${d.rating || 4.9} / 5.0</span>
+            <button class="button button--primary button--sm" onclick="openBookModalForDoctor('${d.email}')">Book Visit</button>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    function filterDoctorsByDept(dept, btn) {
+      document.querySelectorAll('#dept-filter-group .filter-btn').forEach(b => b.classList.remove('is-active'));
+      if (btn) btn.classList.add('is-active');
+
+      if (dept === 'all') {
+        renderDoctorsGrid(cachedDoctors);
+      } else {
+        renderDoctorsGrid(cachedDoctors.filter(d => d.department === dept));
+      }
+    }
+
+    // 4. PROFILE
+    async function loadProfile() {
+      if (!currentUser) return;
+      try {
+        const response = await fetch(`/api/patients/profile?email=${encodeURIComponent(currentUser.email)}&name=${encodeURIComponent(currentUser.fullName)}`);
+        const data = await response.json();
+        if (data.patient) {
+          const p = data.patient;
+          document.getElementById('summary-blood').textContent = p.bloodGroup || 'O+';
+          document.getElementById('stat-blood-group').textContent = p.bloodGroup || 'O+';
+          document.getElementById('patient-blood-badge').textContent = p.bloodGroup || 'O+';
+          document.getElementById('summary-age-gender').textContent = `${p.age || 30} yrs • ${p.gender || 'Not specified'}`;
+          document.getElementById('summary-phone').textContent = p.phone || '+91 98765 00000';
+          document.getElementById('summary-history').textContent = p.medicalHistory || 'None reported';
+
+          document.getElementById('prof-fullName').value = p.fullName || currentUser.fullName;
+          document.getElementById('prof-email').value = p.email || currentUser.email;
+          document.getElementById('prof-age').value = p.age || '';
+          document.getElementById('prof-gender').value = p.gender || 'Male';
+          document.getElementById('prof-phone').value = p.phone || '';
+          document.getElementById('prof-bloodGroup').value = p.bloodGroup || 'O+';
+          document.getElementById('prof-medicalHistory').value = p.medicalHistory || '';
+        }
+      } catch (err) {
+        console.error('Failed to load profile:', err);
+      }
+    }
+
+    async function handleProfileSubmit(e) {
+      e.preventDefault();
+      const saveBtn = document.getElementById('save-profile-btn');
+      try {
+        saveBtn.disabled = true;
+        saveBtn.textContent = 'Saving...';
+
+        const payload = {
+          email: currentUser.email,
+          fullName: document.getElementById('prof-fullName').value,
+          age: document.getElementById('prof-age').value,
+          gender: document.getElementById('prof-gender').value,
+          phone: document.getElementById('prof-phone').value,
+          bloodGroup: document.getElementById('prof-bloodGroup').value,
+          medicalHistory: document.getElementById('prof-medicalHistory').value,
+        };
+
+        const response = await fetch('/api/patients/profile', {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        const res = await response.json();
+        if (!response.ok) throw new Error(res.message);
+
+        // Update session
+        currentUser.fullName = payload.fullName;
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+        initUserSession();
+
+        showAlert('Profile updated successfully!');
+        loadProfile();
+      } catch (err) {
+        showAlert(err.message, 'error');
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.textContent = 'Save Profile Changes';
+      }
+    }
+
+    // BOOKING MODAL
+    async function openBookModal() {
+      if (!cachedDoctors || cachedDoctors.length === 0) {
+        await loadDoctors();
+      }
+      
+      // Default date to tomorrow
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      document.getElementById('book-date').value = tomorrow.toISOString().split('T')[0];
+
+      document.getElementById('book-modal').classList.remove('hidden');
+    }
+
+    async function openBookModalForDoctor(docEmail) {
+      await openBookModal();
+      if (docEmail) {
+        document.getElementById('book-doctor').value = docEmail;
+      }
+    }
+
+    function closeBookModal() {
+      document.getElementById('book-modal').classList.add('hidden');
+    }
+
+    async function handleBookSubmit(e) {
+      e.preventDefault();
+      const submitBtn = document.getElementById('book-submit-btn');
+      try {
+        const docEmail = document.getElementById('book-doctor').value;
+        if (!docEmail) {
+          showAlert('Please select a doctor to book your appointment.', 'error');
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Booking...';
+
+        const selectedDoc = cachedDoctors.find(d => d.email === docEmail) || { fullName: 'Dr. On Duty' };
+
+        const payload = {
+          patientName: currentUser.fullName,
+          patientEmail: currentUser.email,
+          doctorEmail: docEmail,
+          doctorName: selectedDoc.fullName,
+          date: document.getElementById('book-date').value,
+          timeSlot: document.getElementById('book-timeslot').value,
+          reason: document.getElementById('book-reason').value,
+        };
+
+        const response = await fetch('/api/appointments', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        const res = await response.json();
+        if (!response.ok) throw new Error(res.message);
+
+        showAlert(`Appointment booked successfully with ${selectedDoc.fullName}!`);
+        closeBookModal();
+        document.getElementById('book-form').reset();
+        loadAppointments();
+      } catch (err) {
+        showAlert(err.message, 'error');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Confirm Booking';
+      }
+    }
+
+    // LOGOUT
+    document.getElementById('logout-btn').addEventListener('click', () => {
+      localStorage.removeItem('currentUser');
+      window.location.href = 'login.html';
+    });
+
+    // INITIALIZATION
+    window.addEventListener('DOMContentLoaded', () => {
+      initUserSession();
+      loadAppointments();
+      loadPrescriptions();
+      loadDoctors();
+      loadProfile();
+    });
+  </script>
+</body>
+</html>
