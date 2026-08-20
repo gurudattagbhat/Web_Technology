@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guru's Pure Veg Restaurant - Bill Generator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1e293b;
+            --accent: #d97706;
+            --accent-gold: #e5a93c;
+            --bg-body: #f1f5f9;
+            --border: #e2e8f0;
+            --veg-green: #16a34a;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg-body); color: #0f172a; min-height: 100vh; }
+
+        /* Top Navbar */
+        .navbar {
+            background: #0f172a; color: white; padding: 0.85rem 2rem;
+            display: flex; justify-content: space-between; align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); position: sticky; top: 0; z-index: 100;
+        }
+        .brand { display: flex; align-items: center; gap: 12px; }
+        .brand-icon {
+            width: 40px; height: 40px; background: var(--accent-gold); border-radius: 8px;
+            display: flex; align-items: center; justify-content: center; color: #0f172a; font-weight: 800;
+        }
+        .brand-title { font-family: 'Cinzel', serif; font-size: 1.4rem; font-weight: 800; }
+        .veg-badge { background: #dcfce7; color: #15803d; font-size: 0.7rem; font-weight: 700; padding: 2px 6px; border-radius: 4px; border: 1px solid #86efac; margin-left: 8px; }
+        .nav-actions { display: flex; gap: 10px; }
+
+        .btn {
+            padding: 0.55rem 1.1rem; border-radius: 8px; font-size: 0.85rem; font-weight: 600;
+            border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: 0.2s;
+        }
+        .btn-primary { background: var(--accent); color: white; }
+        .btn-primary:hover { background: #b45309; }
+        .btn-secondary { background: #334155; color: white; }
+        .btn-secondary:hover { background: #475569; }
+        .btn-outline { background: transparent; border: 1px solid #475569; color: #e2e8f0; }
+        .btn-outline:hover { background: #334155; }
+
+        /* Main Container */
+        .app-container {
+            max-width: 1350px; margin: 1.5rem auto; padding: 0 1rem; width: 100%;
+            display: grid; grid-template-columns: 440px 1fr; gap: 1.5rem;
+        }
+        @media (max-width: 1024px) { .app-container { grid-template-columns: 1fr; } }
+
+        .panel {
+            background: white; border-radius: 12px; padding: 1.25rem;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); border: 1px solid var(--border);
+            display: flex; flex-direction: column; gap: 1.1rem; height: fit-content;
+        }
+        .panel-title { font-size: 1rem; font-weight: 700; color: var(--primary); border-bottom: 2px solid var(--border); padding-bottom: 0.4rem; }
+
+        .form-group { display: flex; flex-direction: column; gap: 4px; margin-bottom: 0.75rem; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        label { font-size: 0.78rem; font-weight: 700; color: #64748b; text-transform: uppercase; }
+        select, input {
+            width: 100%; padding: 0.55rem 0.75rem; border: 1.5px solid var(--border); border-radius: 6px;
+            font-size: 0.9rem; font-family: inherit; background: #f8fafc;
+        }
+        select:focus, input:focus { outline: none; border-color: var(--accent); background: white; }
+
+        .price-badge { background: #fef3c7; color: #92400e; padding: 0.4rem; border-radius: 6px; font-weight: 700; font-size: 0.85rem; border: 1px solid #fde68a; text-align: center; }
+
+        /* Category Chips & Cards */
+        .cat-chips { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; }
+        .chip { padding: 0.35rem 0.75rem; border-radius: 16px; font-size: 0.75rem; font-weight: 600; background: #e2e8f0; border: none; cursor: pointer; white-space: nowrap; }
+        .chip.active { background: var(--primary); color: white; }
+
+        .dish-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(125px, 1fr)); gap: 8px; max-height: 220px; overflow-y: auto; }
+        .dish-card { background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 0.55rem; cursor: pointer; transition: 0.15s; }
+        .dish-card:hover { border-color: var(--accent); background: #fffbe6; transform: translateY(-1px); }
+        .dish-name { font-size: 0.8rem; font-weight: 600; color: #0f172a; line-height: 1.2; }
+        .dish-price { font-size: 0.78rem; font-weight: 700; color: var(--accent); margin-top: 4px; }
+
+        /* Visme Ghiotto Template Invoice Styling */
+        .bill-paper {
+            background: white; border-radius: 4px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+            padding: 2.2rem 2.5rem; border: 1px solid var(--border); max-width: 800px; width: 100%; margin: 0 auto;
+        }
+
+        .bill-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.2rem; }
+        .bill-logo-area { display: flex; gap: 14px; align-items: center; }
+        .bill-title { font-family: 'Cinzel', serif; font-size: 2.1rem; font-weight: 800; color: #1e293b; line-height: 1; }
+        .bill-tagline { font-family: 'Playfair Display', serif; font-size: 0.9rem; color: #64748b; font-style: italic; margin-top: 2px; }
+        .bill-address { text-align: right; font-size: 0.82rem; color: #475569; line-height: 1.4; }
+
+        .yellow-accent-bar { height: 5px; background: linear-gradient(90deg, #e5a93c, #d97706); border-radius: 3px; margin-bottom: 1.5rem; }
+
+        .meta-banner { display: flex; justify-content: space-between; background: #f8fafc; padding: 0.6rem 1rem; border-radius: 6px; border-left: 4px solid var(--accent-gold); margin-bottom: 1.2rem; font-size: 0.82rem; }
+        .meta-banner div { display: flex; flex-direction: column; }
+        .meta-lbl { font-size: 0.68rem; text-transform: uppercase; color: #64748b; font-weight: 700; }
+        .meta-val { font-weight: 700; color: #0f172a; }
+
+        .bill-table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
+        .bill-table th { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: #1e293b; padding: 10px 12px; border-bottom: 2px solid #334155; text-align: left; }
+        .bill-table td { padding: 11px 12px; font-size: 0.9rem; color: #334155; border-bottom: 1px solid #f1f5f9; }
+        .bill-table tbody tr:nth-child(even) { background-color: #f8fafc; }
+        
+        .sl-col { width: 8%; color: #64748b; font-weight: 600; }
+        .desc-col { width: 48%; font-weight: 600; color: #0f172a; }
+        .qty-col { width: 12%; text-align: center; }
+        .price-col { width: 16%; text-align: right; }
+        .total-col { width: 16%; text-align: right; font-weight: 700; color: #0f172a; }
+
+        .row-del-btn { background: none; border: none; color: #ef4444; cursor: pointer; font-size: 1rem; padding: 2px 6px; }
+
+        .total-section { display: flex; flex-direction: column; align-items: flex-end; }
+        .total-table { width: 290px; border-collapse: collapse; }
+        .total-table td { padding: 6px 12px; font-size: 0.9rem; }
+        .total-table .lbl { text-align: left; color: #475569; font-weight: 600; }
+        .total-table .val { text-align: right; font-weight: 700; color: #0f172a; }
+
+        .grand-total-row { font-size: 1.15rem !important; border-top: 2px solid #0f172a; border-bottom: 4px double #0f172a; background: #fafaf9; }
+        .grand-total-row td { padding: 10px 12px !important; font-family: 'Playfair Display', serif; font-weight: 700 !important; }
+
+        .bill-footer { margin-top: 2.5rem; text-align: center; border-top: 1px dashed #cbd5e1; padding-top: 1rem; color: #64748b; font-size: 0.8rem; }
+
+        @media print {
+            body { background: white; }
+            .navbar, .panel, .btn, .row-del-btn, .cat-chips, .dish-grid { display: none !important; }
+            .app-container { display: block; padding: 0; }
+            .bill-paper { box-shadow: none; border: none; padding: 0; width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Navbar -->
+    <header class="navbar">
+        <div class="brand">
+            <div class="brand-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M12 2C6.477 2 2 6.477 2 12v8h20v-8c0-5.523-4.477-10-10-10z" opacity="0.25"/>
+                    <path d="M7 10v4M10 10v4M8.5 10v9M16 10v9M14 10c0 2 3 2 3 0"/>
+                </svg>
+            </div>
+            <div>
+                <span class="brand-title">Guru's Restaurant</span>
+                <span class="veg-badge">100% PURE VEG</span>
+            </div>
+        </div>
+        <div class="nav-actions">
+            <button class="btn btn-outline" onclick="loadSampleBill()">Load Sample</button>
+            <button class="btn btn-secondary" onclick="clearBill()">Clear</button>
+            <button class="btn btn-primary" onclick="window.print()">Print / Save PDF</button>
+        </div>
+    </header>
+
+    <div class="app-container">
+        <!-- POS Control Panel -->
+        <aside class="panel">
+            <div class="panel-title">Order Details</div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="custName">Customer</label>
+                    <input type="text" id="custName" value="Rahul Sharma" oninput="renderBill()">
+                </div>
+                <div class="form-group">
+                    <label for="tableNo">Table / Ref</label>
+                    <input type="text" id="tableNo" value="Table 05" oninput="renderBill()">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="billDate">Date</label>
+                    <input type="date" id="billDate" onchange="renderBill()">
+                </div>
+                <div class="form-group">
+                    <label for="invoiceNo">Invoice No</label>
+                    <input type="text" id="invoiceNo" value="GR-2026-894" oninput="renderBill()">
+                </div>
+            </div>
+
+            <div class="panel-title">Select Pure Veg Dish</div>
+            <form onsubmit="handleFormAdd(event)">
+                <div class="form-group">
+                    <label for="dishSelect">Vegetarian Dish</label>
+                    <select id="dishSelect" onchange="onDishSelectChange()">
+                        <option value="">-- Select a dish --</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Stored Unit Price</label>
+                        <div class="price-badge">₹ <span id="priceDisplay">0.00</span></div>
+                        <input type="hidden" id="unitPrice" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="itemQty">Quantity</label>
+                        <input type="number" id="itemQty" value="1" min="1" max="99">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;">+ Add to Bill</button>
+            </form>
+
+            <div class="panel-title">Quick Menu Pick</div>
+            <div class="cat-chips" id="catChips"></div>
+            <div class="dish-grid" id="dishGrid"></div>
+
+            <div class="panel-title">Tax & Discount</div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="taxRate">GST (%)</label>
+                    <select id="taxRate" onchange="renderBill()">
+                        <option value="0">0%</option>
+                        <option value="5" selected>5% (CGST 2.5% + SGST 2.5%)</option>
+                        <option value="12">12%</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="discountAmt">Discount (₹)</label>
+                    <input type="number" id="discountAmt" value="0" min="0" oninput="renderBill()">
+                </div>
+            </div>
+        </aside>
+
+        <!-- Printable Bill Paper matching Visme Ghiotto sample -->
+        <main style="display:flex; justify-content:center;">
+            <div class="bill-paper">
+                
+                <header class="bill-header">
+                    <div class="bill-logo-area">
+                        <svg width="56" height="56" viewBox="0 0 100 100">
+                            <path d="M 15 55 A 35 35 0 0 1 85 55" stroke="#e5a93c" stroke-width="7" fill="none"/>
+                            <path d="M 38 32 L 38 52 M 34 32 L 34 44 M 42 32 L 42 44 M 34 44 C 34 50, 42 50, 42 44 M 38 52 L 38 74" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/>
+                            <path d="M 62 32 C 55 32, 55 48, 62 48 C 69 48, 69 32, 62 32 Z M 62 48 L 62 74" stroke="#1e293b" stroke-width="3" stroke-linecap="round" fill="#1e293b" fill-opacity="0.15"/>
+                        </svg>
+                        <div>
+                            <div class="bill-title">Guru's</div>
+                            <div class="bill-tagline">Deliciousness in every bite &bull; Pure Veg</div>
+                        </div>
+                    </div>
+                    <div class="bill-address">
+                        <div><strong>Guru's Restaurant</strong></div>
+                        <div>2317 MG Road, Indiranagar</div>
+                        <div>Bengaluru, KA 560038</div>
+                        <div>+91 987-098-1230</div>
+                        <div style="font-weight:700; margin-top:4px; color:#0f172a;">Date: <span id="billDateDisplay">XX-XX-XXXX</span></div>
+                    </div>
+                </header>
+
+                <div class="yellow-accent-bar"></div>
+
+                <div class="meta-banner">
+                    <div><span class="meta-lbl">Billed To</span><span class="meta-val" id="custNameDisplay">Rahul Sharma</span></div>
+                    <div><span class="meta-lbl">Table / Ref</span><span class="meta-val" id="tableNoDisplay">Table 05</span></div>
+                    <div><span class="meta-lbl">Invoice No</span><span class="meta-val" id="invoiceNoDisplay">GR-2026-894</span></div>
+                </div>
+
+                <table class="bill-table">
+                    <thead>
+                        <tr>
+                            <th class="sl-col">Sl.</th>
+                            <th class="desc-col">Description</th>
+                            <th class="qty-col" style="text-align:center;">Qty.</th>
+                            <th class="price-col" style="text-align:right;">Unit Price (₹)</th>
+                            <th class="total-col" style="text-align:right;">Total (₹)</th>
+                            <th style="width:4%;"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="billBody"></tbody>
+                </table>
+
+                <div class="total-section">
+                    <table class="total-table">
+                        <tr><td class="lbl">Subtotal</td><td class="val" id="subtotalDisplay">₹0.00</td></tr>
+                        <tr id="taxRow"><td class="lbl" id="taxLabel">GST (5%)</td><td class="val" id="taxDisplay">₹0.00</td></tr>
+                        <tr id="discountRow" style="display:none;"><td class="lbl">Discount</td><td class="val" style="color:#dc2626;" id="discountDisplay">-₹0.00</td></tr>
+                        <tr class="grand-total-row"><td class="lbl">Total</td><td class="val" id="grandTotalDisplay">₹0.00</td></tr>
+                    </table>
+                </div>
+
+                <footer class="bill-footer">
+                    <div>Thank you for dining at <strong>Guru's Pure Veg Restaurant</strong>!</div>
+                    <div style="font-size:0.75rem; color:#94a3b8; margin-top:3px;">100% Vegetarian &bull; FSSAI Lic No. 11223344556677</div>
+                </footer>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Expanded 100% Pure Vegetarian Indian Dishes Menu Database
+        const vegMenu = [
+            // Starters & Snacks
+            { id: 'paneer-tikka', name: 'Paneer Tikka Tandoori', cat: 'Starters', price: 240 },
+            { id: 'hara-bhara-kebab', name: 'Hara Bhara Kebab', cat: 'Starters', price: 190 },
+            { id: 'samosa-plate', name: 'Punjabi Samosa (2 pcs)', cat: 'Starters', price: 50 },
+            { id: 'veg-spring-roll', name: 'Crispy Veg Spring Roll', cat: 'Starters', price: 180 },
+            { id: 'aloo-tikki-chaat', name: 'Aloo Tikki Chaat', cat: 'Starters', price: 110 },
+            { id: 'dahi-bhalla', name: 'Dahi Bhalla Special', cat: 'Starters', price: 120 },
+            { id: 'paneer-65', name: 'Spicy Paneer 65', cat: 'Starters', price: 220 },
+            { id: 'gobi-manchurian', name: 'Gobi Manchurian Dry', cat: 'Starters', price: 180 },
+
+            // Main Course
+            { id: 'paneer-butter-masala', name: 'Paneer Butter Masala', cat: 'Main Course', price: 260 },
+            { id: 'dal-makhani', name: 'Dal Makhani (Special)', cat: 'Main Course', price: 210 },
+            { id: 'kadhai-paneer', name: 'Kadhai Paneer', cat: 'Main Course', price: 250 },
+            { id: 'shahi-paneer', name: 'Shahi Paneer', cat: 'Main Course', price: 270 },
+            { id: 'palak-paneer', name: 'Palak Paneer', cat: 'Main Course', price: 240 },
+            { id: 'malai-kofta', name: 'Malai Kofta Curry', cat: 'Main Course', price: 250 },
+            { id: 'veg-kolhapuri', name: 'Veg Kolhapuri (Spicy)', cat: 'Main Course', price: 220 },
+            { id: 'dal-tadka', name: 'Dhaba Dal Tadka', cat: 'Main Course', price: 170 },
+            { id: 'mix-veg', name: 'Mix Veg Handi', cat: 'Main Course', price: 210 },
+            { id: 'chole-bhature', name: 'Special Chole Bhature', cat: 'Main Course', price: 160 },
+            { id: 'matar-paneer', name: 'Matar Paneer', cat: 'Main Course', price: 230 },
+            { id: 'bhindi-masala', name: 'Bhindi Masala', cat: 'Main Course', price: 180 },
+
+            // Breads & Rice
+            { id: 'butter-naan', name: 'Butter Naan', cat: 'Breads & Rice', price: 45 },
+            { id: 'garlic-naan', name: 'Garlic Naan', cat: 'Breads & Rice', price: 55 },
+            { id: 'tandoori-roti', name: 'Tandoori Roti', cat: 'Breads & Rice', price: 20 },
+            { id: 'butter-roti', name: 'Butter Roti', cat: 'Breads & Rice', price: 25 },
+            { id: 'paneer-paratha', name: 'Stuffed Paneer Paratha', cat: 'Breads & Rice', price: 80 },
+            { id: 'veg-dum-biryani', name: 'Veg Dum Biryani', cat: 'Breads & Rice', price: 210 },
+            { id: 'paneer-biryani', name: 'Special Paneer Biryani', cat: 'Breads & Rice', price: 240 },
+            { id: 'jeera-rice', name: 'Jeera Basmati Rice', cat: 'Breads & Rice', price: 150 },
+            { id: 'steamed-rice', name: 'Steamed Basmati Rice', cat: 'Breads & Rice', price: 120 },
+
+            // South Indian
+            { id: 'masala-dosa', name: 'Crispy Masala Dosa', cat: 'South Indian', price: 110 },
+            { id: 'paneer-dosa', name: 'Paneer Butter Dosa', cat: 'South Indian', price: 140 },
+            { id: 'idli-vada-combo', name: 'Idli Vada Combo', cat: 'South Indian', price: 90 },
+            { id: 'onion-uttapam', name: 'Onion Rava Uttapam', cat: 'South Indian', price: 120 },
+            { id: 'plain-dosa', name: 'Plain Butter Dosa', cat: 'South Indian', price: 95 },
+
+            // Beverages & Desserts
+            { id: 'mango-lassi', name: 'Special Mango Lassi', cat: 'Drinks & Desserts', price: 80 },
+            { id: 'sweet-lassi', name: 'Punjabi Sweet Lassi', cat: 'Drinks & Desserts', price: 70 },
+            { id: 'masala-chaas', name: 'Chilled Masala Chaas', cat: 'Drinks & Desserts', price: 40 },
+            { id: 'gulab-jamun', name: 'Gulab Jamun (2 pcs)', cat: 'Drinks & Desserts', price: 70 },
+            { id: 'rasgulla', name: 'Saffron Rasgulla (2 pcs)', cat: 'Drinks & Desserts', price: 70 },
+            { id: 'rasmalai', name: 'Royal Rasmalai (2 pcs)', cat: 'Drinks & Desserts', price: 90 },
+            { id: 'masala-chai', name: 'Kulhad Masala Chai', cat: 'Drinks & Desserts', price: 30 }
+        ];
+
+        let activeItems = [];
+        let curCat = 'All';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('billDate').value = today;
+            
+            initSelect();
+            initChips();
+            renderGrid();
+            loadSampleBill();
+        });
+
+        function initSelect() {
+            const sel = document.getElementById('dishSelect');
+            sel.innerHTML = '<option value="">-- Select a dish --</option>';
+            const cats = [...new Set(vegMenu.map(d => d.cat))];
+            
+            cats.forEach(c => {
+                const grp = document.createElement('optgroup');
+                grp.label = c;
+                vegMenu.filter(d => d.cat === c).forEach(d => {
+                    const opt = document.createElement('option');
+                    opt.value = d.id;
+                    opt.textContent = `${d.name} — ₹${d.price}`;
+                    grp.appendChild(opt);
+                });
+                sel.appendChild(grp);
+            });
+        }
+
+        function onDishSelectChange() {
+            const id = document.getElementById('dishSelect').value;
+            const dish = vegMenu.find(d => d.id === id);
+            document.getElementById('priceDisplay').textContent = dish ? dish.price.toFixed(2) : '0.00';
+            document.getElementById('unitPrice').value = dish ? dish.price : 0;
+        }
+
+        function initChips() {
+            const cats = ['All', ...new Set(vegMenu.map(d => d.cat))];
+            const wrap = document.getElementById('catChips');
+            wrap.innerHTML = '';
+            cats.forEach(c => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = `chip ${c === curCat ? 'active' : ''}`;
+                btn.textContent = c;
+                btn.onclick = () => { curCat = c; initChips(); renderGrid(); };
+                wrap.appendChild(btn);
+            });
+        }
+
+        function renderGrid() {
+            const grid = document.getElementById('dishGrid');
+            grid.innerHTML = '';
+            const list = curCat === 'All' ? vegMenu : vegMenu.filter(d => d.cat === curCat);
+            list.forEach(d => {
+                const card = document.createElement('div');
+                card.className = 'dish-card';
+                card.onclick = () => addDish(d);
+                card.innerHTML = `<div class="dish-name">${d.name}</div><div class="dish-price">₹ ${d.price}</div>`;
+                grid.appendChild(card);
+            });
+        }
+
+        function addDish(dish, qty = 1, price = null) {
+            const existing = activeItems.find(i => i.id === dish.id);
+            if (existing) {
+                existing.qty += qty;
+            } else {
+                activeItems.push({ id: dish.id, name: dish.name, price: price || dish.price, qty });
+            }
+            renderBill();
+        }
+
+        function handleFormAdd(e) {
+            e.preventDefault();
+            const id = document.getElementById('dishSelect').value;
+            if (!id) return alert('Select a dish!');
+            const dish = vegMenu.find(d => d.id === id);
+            const qty = parseInt(document.getElementById('itemQty').value) || 1;
+            addDish(dish, qty);
+            document.getElementById('dishSelect').value = '';
+            onDishSelectChange();
+        }
+
+        function updateQty(idx, qty) {
+            if (qty <= 0) activeItems.splice(idx, 1);
+            else activeItems[idx].qty = parseInt(qty);
+            renderBill();
+        }
+
+        function removeRow(idx) {
+            activeItems.splice(idx, 1);
+            renderBill();
+        }
+
+        function renderBill() {
+            // Update Headers
+            const cust = document.getElementById('custName').value || 'Guest';
+            const tbl = document.getElementById('tableNo').value || 'N/A';
+            const inv = document.getElementById('invoiceNo').value || 'GR-0000';
+            const dt = document.getElementById('billDate').value;
+
+            document.getElementById('custNameDisplay').textContent = cust;
+            document.getElementById('tableNoDisplay').textContent = tbl;
+            document.getElementById('invoiceNoDisplay').textContent = inv;
+            if (dt) {
+                const [y, m, d] = dt.split('-');
+                document.getElementById('billDateDisplay').textContent = `${d}-${m}-${y}`;
+            }
+
+            // Render Table Rows
+            const tbody = document.getElementById('billBody');
+            tbody.innerHTML = '';
+            if (activeItems.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:#94a3b8; padding:2rem; font-style:italic;">No veg dishes added yet.</td></tr>`;
+            } else {
+                activeItems.forEach((item, idx) => {
+                    const rowTotal = item.qty * item.price;
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td class="sl-col">${idx + 1}</td>
+                        <td class="desc-col">${item.name}</td>
+                        <td class="qty-col" style="text-align:center;">
+                            <input type="number" value="${item.qty}" min="1" max="99" style="width:50px; text-align:center; padding:2px;" onchange="updateQty(${idx}, this.value)">
+                        </td>
+                        <td class="price-col" style="text-align:right;">${item.price.toFixed(2)}</td>
+                        <td class="total-col" style="text-align:right;">${rowTotal.toFixed(2)}</td>
+                        <td style="text-align:center;"><button class="row-del-btn" onclick="removeRow(${idx})">&times;</button></td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
+
+            // Calculate Totals
+            const subtotal = activeItems.reduce((sum, i) => sum + (i.qty * i.price), 0);
+            const taxPct = parseFloat(document.getElementById('taxRate').value) || 0;
+            const taxAmt = (subtotal * taxPct) / 100;
+            const discAmt = parseFloat(document.getElementById('discountAmt').value) || 0;
+            const grandTotal = Math.max(0, subtotal + taxAmt - discAmt);
+
+            document.getElementById('subtotalDisplay').textContent = `₹${subtotal.toFixed(2)}`;
+            document.getElementById('taxRow').style.display = taxPct > 0 ? 'table-row' : 'none';
+            document.getElementById('taxLabel').textContent = `GST (${taxPct}%)`;
+            document.getElementById('taxDisplay').textContent = `₹${taxAmt.toFixed(2)}`;
+            document.getElementById('discountRow').style.display = discAmt > 0 ? 'table-row' : 'none';
+            document.getElementById('discountDisplay').textContent = `-₹${discAmt.toFixed(2)}`;
+            document.getElementById('grandTotalDisplay').textContent = `₹${grandTotal.toFixed(2)}`;
+        }
+
+        function loadSampleBill() {
+            activeItems = [
+                { id: 'paneer-butter-masala', name: 'Paneer Butter Masala', price: 260, qty: 2 },
+                { id: 'butter-naan', name: 'Butter Naan', price: 45, qty: 4 },
+                { id: 'dal-makhani', name: 'Dal Makhani (Special)', price: 210, qty: 1 },
+                { id: 'mango-lassi', name: 'Special Mango Lassi', price: 80, qty: 3 }
+            ];
+            renderBill();
+        }
+
+        function clearBill() {
+            if (confirm('Clear all dishes from bill?')) {
+                activeItems = [];
+                renderBill();
+            }
+        }
+    </script>
+</body>
+</html>
