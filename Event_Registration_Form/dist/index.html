@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alliance ONE 2026 — Official Inter-College Registration Portal | Alliance University</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" crossorigin href="/assets/index-D7gco2ed.css">
+</head>
+<body>
+
+  <!-- Ambient Glow Background -->
+  <div class="ambient-bg">
+    <div class="ambient-blob-1"></div>
+    <div class="ambient-blob-2"></div>
+  </div>
+
+  <!-- Header Navigation -->
+  <header>
+    <div class="container" style="display: flex; align-items: center; justify-content: space-between;">
+      <!-- Brand Logo -->
+      <div onclick="window.showView('dashboard')" style="display: flex; align-items: center; gap: 14px; cursor: pointer;">
+        <div style="width: 48px; height: 48px; border-radius: 14px; background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-gold) 100%); display: flex; align-items: center; justify-content: center; color: #FFFFFF; font-size: 24px; font-weight: 800;">
+          🎓
+        </div>
+        <div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="font-family: var(--font-heading); font-weight: 800; font-size: 1.5rem; color: var(--text-primary); letter-spacing: -0.5px;">
+              Alliance <span style="color: var(--accent-primary);">ONE</span> 2026
+            </span>
+            <span class="badge badge-gold" style="font-size: 0.7rem; padding: 2px 8px;">Annual Fest</span>
+          </div>
+          <div style="font-size: 0.76rem; color: var(--text-secondary); font-weight: 600;">
+            Alliance University • Inter-College Registration Portal
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation Buttons -->
+      <nav style="display: flex; align-items: center; gap: 14px;">
+        <button class="btn btn-secondary" onclick="window.showView('dashboard')">Fest Dashboard</button>
+        <button class="btn btn-outline" onclick="window.openBookingsModal()" style="position: relative;">
+          🎫 My Registrations
+          <span id="bookings-badge-count" style="position: absolute; top: -6px; right: -6px; background: var(--accent-primary); color: #FFF; border-radius: 50%; width: 20px; height: 20px; font-size: 0.72rem; font-weight: 700; display: flex; align-items: center; justify-content: center;">0</span>
+        </button>
+        <button class="btn btn-primary" onclick="window.showView('register')">➕ Register for Events</button>
+      </nav>
+    </div>
+  </header>
+
+  <main style="flex: 1;">
+    
+    <!-- 1) FEST DASHBOARD VIEW -->
+    <section id="dashboard-view" class="view-section active" style="padding-bottom: 80px;">
+      <!-- Hero Banner with Prominent Event Background Image -->
+      <div style="padding: 70px 0 60px; position: relative; background-image: url('/assets/images%20(1)-CimRW9Ar.jpeg'); background-size: cover; background-position: center 40%; overflow: hidden;">
+        <!-- Ambient Dark Overlay Tint -->
+        <div style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(15, 26, 21, 0.78) 0%, rgba(27, 45, 38, 0.68) 100%); z-index: 0;"></div>
+
+        <div class="container" style="position: relative; z-index: 1;">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
+            
+            <!-- Left Column: Frosted Glass Panel -->
+            <div style="background-color: rgba(255, 255, 255, 0.94); backdrop-filter: blur(16px); padding: 40px; border-radius: 24px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.6);">
+              <div class="badge badge-emerald" style="margin-bottom: 16px;">
+                🎓 Official Registration Portal — Alliance University
+              </div>
+              
+              <h1 style="font-size: 3.3rem; letter-spacing: -1.5px; margin-bottom: 18px; color: var(--text-primary); line-height: 1.15;">
+                Alliance <span style="color: var(--accent-primary);">ONE 2026</span>
+              </h1>
+
+              <div style="font-size: 1.2rem; font-weight: 700; color: var(--accent-gold); margin-bottom: 16px;">
+                📅 October 24 - 26, 2026 • Bengaluru Main Campus
+              </div>
+
+              <p style="font-size: 1.08rem; color: var(--text-secondary); margin-bottom: 32px; line-height: 1.7;">
+                Join South India’s biggest inter-college cultural, technical, and esports extravaganza! Register solo or form your college team for 35+ competitions, pro-nights, and workshops.
+              </p>
+
+              <!-- Requirement 1: If I click Reg button then go to reg page -->
+              <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+                <button class="btn btn-primary btn-lg" onclick="window.showView('register')">
+                  Reg Page / Register for Events ➔
+                </button>
+                <a href="#events-list" class="btn btn-secondary btn-lg">Explore Competitions</a>
+              </div>
+
+              <!-- Statistics -->
+              <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border-color);">
+                <div>
+                  <div style="font-size: 1.7rem; font-weight: 800; color: var(--accent-primary);">10,000+</div>
+                  <div style="font-size: 0.8rem; color: var(--text-secondary); font-weight: 500;">Delegates</div>
+                </div>
+                <div>
+                  <div style="font-size: 1.7rem; font-weight: 800; color: var(--accent-gold);">120+</div>
+                  <div style="font-size: 0.8rem; color: var(--text-secondary); font-weight: 500;">Colleges</div>
+                </div>
+                <div>
+                  <div style="font-size: 1.7rem; font-weight: 800; color: var(--accent-sage);">35+</div>
+                  <div style="font-size: 0.8rem; color: var(--text-secondary); font-weight: 500;">Events</div>
+                </div>
+                <div>
+                  <div style="font-size: 1.7rem; font-weight: 800; color: var(--accent-primary);">₹15 Lakhs+</div>
+                  <div style="font-size: 0.8rem; color: var(--text-secondary); font-weight: 500;">Prize Pool</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Column: Hero Gallery Grid -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+              <div style="display: flex; flex-direction: column; gap: 20px;">
+                <div class="card" style="overflow: hidden; height: 240px; position: relative;">
+                  <img src="/assets/image1-5uTai1hN.webp" alt="Poster" style="width: 100%; height: 100%; object-fit: cover;" />
+                  <div style="position: absolute; top: 14px; left: 14px; z-index: 10;">
+                    <span class="badge badge-gold">Official Banner</span>
+                  </div>
+                  <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(15, 24, 20, 0.92) 0%, transparent 70%); padding: 18px 16px; display: flex; flex-direction: column; justify-content: flex-end; color: #FFF;">
+                    <strong>Alliance ONE 2026 Flagship Fest</strong>
+                  </div>
+                </div>
+
+                <div class="card" style="overflow: hidden; height: 200px; position: relative;">
+                  <img src="/assets/images%20(2)-e_LaDkn0.jpeg" alt="Band" style="width: 100%; height: 100%; object-fit: cover;" />
+                  <div style="position: absolute; top: 14px; left: 14px; z-index: 10;">
+                    <span class="badge badge-emerald">Main Amphitheatre</span>
+                  </div>
+                  <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(15, 24, 20, 0.92) 0%, transparent 70%); padding: 16px; display: flex; flex-direction: column; justify-content: flex-end; color: #FFF;">
+                    <strong>Battle of Bands Live Night</strong>
+                  </div>
+                </div>
+              </div>
+
+              <div style="display: flex; flex-direction: column; gap: 20px; padding-top: 24px;">
+                <div class="card" style="overflow: hidden; height: 200px; position: relative;">
+                  <img src="/assets/images-c99nFU7H.jpeg" alt="Hackathon" style="width: 100%; height: 100%; object-fit: cover;" />
+                  <div style="position: absolute; top: 14px; left: 14px; z-index: 10;">
+                    <span class="badge badge-amber">Tech Park</span>
+                  </div>
+                  <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(15, 24, 20, 0.92) 0%, transparent 70%); padding: 16px; display: flex; flex-direction: column; justify-content: flex-end; color: #FFF;">
+                    <strong>HackAlliance 24h Hackathon</strong>
+                  </div>
+                </div>
+
+                <div class="card" style="overflow: hidden; height: 240px; position: relative;">
+                  <img src="/assets/download-DE0rEyBQ.jpeg" alt="Concert" style="width: 100%; height: 100%; object-fit: cover;" />
+                  <div style="position: absolute; top: 14px; left: 14px; z-index: 10;">
+                    <span class="badge badge-emerald">Pro Night</span>
+                  </div>
+                  <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(15, 24, 20, 0.92) 0%, transparent 70%); padding: 18px 16px; display: flex; flex-direction: column; justify-content: flex-end; color: #FFF;">
+                    <strong>Esports Arena & Pro-Night</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Active Student Registrations Quick Preview Widget -->
+      <div class="container" style="padding-top: 30px;">
+        <div class="card" style="padding: 28px; background-color: var(--accent-primary-light); border-color: var(--accent-primary);">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span style="font-size: 24px;">🏆</span>
+              <h3 style="font-size: 1.2rem; margin: 0;">Active Student Registration Pass</h3>
+            </div>
+            <span class="badge badge-sage">✔ Confirmed</span>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
+            <div>
+              <span style="font-size: 0.82rem; color: var(--text-secondary);">Pass Reference ID</span>
+              <div style="font-weight: 800; color: var(--accent-primary);">ALLIANCE-ONE-9821</div>
+            </div>
+            <div>
+              <span style="font-size: 0.82rem; color: var(--text-secondary);">Delegate & College</span>
+              <div style="font-weight: 600;">Ananya Hegde (Alliance Univ)</div>
+            </div>
+            <div>
+              <span style="font-size: 0.82rem; color: var(--text-secondary);">Registered Event</span>
+              <div style="font-weight: 600;">HackAlliance 24h Hackathon @ Tech Hall</div>
+            </div>
+            <div>
+              <span style="font-size: 0.82rem; color: var(--text-secondary);">Event Date & Slot</span>
+              <div style="font-weight: 600;">2026-10-24 (09:00 AM)</div>
+            </div>
+          </div>
+
+          <div style="margin-top: 20px; display: flex; justify-content: flex-end;">
+            <button class="btn btn-primary btn-sm" onclick="window.showView('status')">
+              View Official Fest Entry Pass ➔
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Events Showcase Lineup (All 6 Competitions) -->
+      <div id="events-list" class="container" style="padding-top: 60px;">
+        <div style="text-align: center; max-width: 750px; margin: 0 auto 44px;">
+          <span class="badge badge-emerald" style="margin-bottom: 10px;">Competitions & Showdowns</span>
+          <h2 style="font-size: 2.2rem;">Alliance ONE 2026 Events Lineup</h2>
+          <p style="color: var(--text-secondary); margin-top: 8px;">Select your competition format. Choose between solo entry or team registrations.</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 28px;">
+          <!-- 1. Battle of Bands -->
+          <div class="card" style="padding: 28px; cursor: pointer;" onclick="window.showView('register', { eventType: 'battle-of-bands' })">
+            <span class="badge badge-gold" style="float: right;">Cultural</span>
+            <div style="font-size: 32px; margin-bottom: 12px;">🎸</div>
+            <h3 style="font-size: 1.3rem; margin-bottom: 8px;">Battle of Bands & Pro-Night</h3>
+            <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 18px;">Rock out on the grand amphitheatre stage. Top bands battle for the ₹2,00,000 trophy.</p>
+            <div style="display: flex; justify-content: space-between; font-size: 0.84rem; color: var(--text-muted); margin-bottom: 14px;">
+              <span>Format: <strong>Team (3-8)</strong></span>
+              <span style="color: var(--accent-primary); font-weight: 700;">Base Fee: ₹1200</span>
+            </div>
+            <button class="btn btn-outline btn-sm" style="width: 100%;">Register for Battle of Bands ➔</button>
+          </div>
+
+          <!-- 2. HackAlliance -->
+          <div class="card" style="padding: 28px; cursor: pointer;" onclick="window.showView('register', { eventType: 'hack-alliance' })">
+            <span class="badge badge-gold" style="float: right;">Technical</span>
+            <div style="font-size: 32px; margin-bottom: 12px;">💻</div>
+            <h3 style="font-size: 1.3rem; margin-bottom: 8px;">HackAlliance 24h Hackathon</h3>
+            <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 18px;">Overnight coding marathon to solve real-world AI, Web3 & FinTech challenges.</p>
+            <div style="display: flex; justify-content: space-between; font-size: 0.84rem; color: var(--text-muted); margin-bottom: 14px;">
+              <span>Format: <strong>Team (2-4)</strong></span>
+              <span style="color: var(--accent-primary); font-weight: 700;">Base Fee: ₹800</span>
+            </div>
+            <button class="btn btn-outline btn-sm" style="width: 100%;">Register for Hackathon ➔</button>
+          </div>
+
+          <!-- 3. Vogue Fashion Show -->
+          <div class="card" style="padding: 28px; cursor: pointer;" onclick="window.showView('register', { eventType: 'fashion-show' })">
+            <span class="badge badge-gold" style="float: right;">Cultural</span>
+            <div style="font-size: 32px; margin-bottom: 12px;">✨</div>
+            <h3 style="font-size: 1.3rem; margin-bottom: 8px;">Vogue: National Fashion Show</h3>
+            <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 18px;">High-fashion runway competition featuring theme-based couture and music sync.</p>
+            <div style="display: flex; justify-content: space-between; font-size: 0.84rem; color: var(--text-muted); margin-bottom: 14px;">
+              <span>Format: <strong>Team (6-15)</strong></span>
+              <span style="color: var(--accent-primary); font-weight: 700;">Base Fee: ₹1500</span>
+            </div>
+            <button class="btn btn-outline btn-sm" style="width: 100%;">Register for Fashion Show ➔</button>
+          </div>
+
+          <!-- 4. Esports -->
+          <div class="card" style="padding: 28px; cursor: pointer;" onclick="window.showView('register', { eventType: 'esports' })">
+            <span class="badge badge-gold" style="float: right;">Gaming</span>
+            <div style="font-size: 32px; margin-bottom: 12px;">🎮</div>
+            <h3 style="font-size: 1.3rem; margin-bottom: 8px;">Esports Championship (Valorant & BGMI)</h3>
+            <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 18px;">LAN gaming showdown with live commentary, streaming, and pro gaming gear setups.</p>
+            <div style="display: flex; justify-content: space-between; font-size: 0.84rem; color: var(--text-muted); margin-bottom: 14px;">
+              <span>Format: <strong>Squad (4-5)</strong></span>
+              <span style="color: var(--accent-primary); font-weight: 700;">Base Fee: ₹600</span>
+            </div>
+            <button class="btn btn-outline btn-sm" style="width: 100%;">Register for Esports ➔</button>
+          </div>
+
+          <!-- 5. Choreonite Dance -->
+          <div class="card" style="padding: 28px; cursor: pointer;" onclick="window.showView('register', { eventType: 'choreonite' })">
+            <span class="badge badge-gold" style="float: right;">Cultural</span>
+            <div style="font-size: 32px; margin-bottom: 12px;">🔥</div>
+            <h3 style="font-size: 1.3rem; margin-bottom: 8px;">Choreonite: Group Dance Battle</h3>
+            <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 18px;">High-octane synchronization, western & classical group dance championship.</p>
+            <div style="display: flex; justify-content: space-between; font-size: 0.84rem; color: var(--text-muted); margin-bottom: 14px;">
+              <span>Format: <strong>Group (8-20)</strong></span>
+              <span style="color: var(--accent-primary); font-weight: 700;">Base Fee: ₹1000</span>
+            </div>
+            <button class="btn btn-outline btn-sm" style="width: 100%;">Register for Dance Battle ➔</button>
+          </div>
+
+          <!-- 6. AI Robotics Workshop -->
+          <div class="card" style="padding: 28px; cursor: pointer;" onclick="window.showView('register', { eventType: 'robotics-workshop' })">
+            <span class="badge badge-gold" style="float: right;">Workshops</span>
+            <div style="font-size: 32px; margin-bottom: 12px;">🤖</div>
+            <h3 style="font-size: 1.3rem; margin-bottom: 8px;">AI & Autonomous Robotics Workshop</h3>
+            <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 18px;">Hands-on hardware & machine learning kit building session with industry experts.</p>
+            <div style="display: flex; justify-content: space-between; font-size: 0.84rem; color: var(--text-muted); margin-bottom: 14px;">
+              <span>Format: <strong>Solo / Duo</strong></span>
+              <span style="color: var(--accent-primary); font-weight: 700;">Base Fee: ₹500</span>
+            </div>
+            <button class="btn btn-outline btn-sm" style="width: 100%;">Register for Workshop ➔</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Alliance Campus Locations & Venues (All 4 Arenas) -->
+      <div class="container" style="padding-top: 60px;">
+        <div style="text-align: center; max-width: 750px; margin: 0 auto 44px;">
+          <span class="badge badge-gold" style="margin-bottom: 10px;">Campus Map & Arenas</span>
+          <h2 style="font-size: 2.2rem;">Alliance University Event Venues</h2>
+          <p style="color: var(--text-secondary); margin-top: 8px;">State-of-the-art auditoriums, tech labs, open grounds, and amphitheatres across campus.</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 32px;">
+          <!-- Venue 1 -->
+          <div class="card" style="overflow: hidden; display: flex; flex-direction: column;">
+            <div style="height: 220px; position: relative;">
+              <img src="/assets/image1-5uTai1hN.webp" alt="Amphitheatre" style="width: 100%; height: 100%; object-fit: cover;" />
+              <div style="position: absolute; top: 14px; right: 14px; background-color: #FFF; padding: 5px 12px; border-radius: 20px; font-size: 0.88rem; font-weight: 700;">
+                ⭐ 4.95 Campus Rating
+              </div>
+            </div>
+            <div style="padding: 28px; flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <h3 style="font-size: 1.3rem; margin-bottom: 8px;">Central Amphitheatre & Quadrangle</h3>
+                <div style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 18px;">📍 Main Block, Alliance Campus</div>
+                <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px;">
+                  <span style="font-size: 0.8rem; background: var(--bg-primary); padding: 5px 12px; border-radius: 6px;">✓ 360 Sound Stage</span>
+                  <span style="font-size: 0.8rem; background: var(--bg-primary); padding: 5px 12px; border-radius: 6px;">✓ LED Wall Backdrop</span>
+                </div>
+              </div>
+              <div style="border-top: 1px solid var(--border-color); padding-top: 18px; display: flex; align-items: center; justify-content: space-between;">
+                <div>
+                  <span style="font-size: 0.78rem; color: var(--text-muted);">Arena Capacity</span>
+                  <div style="font-size: 1.25rem; font-weight: 800; color: var(--accent-primary);">3,500 Delegates</div>
+                </div>
+                <button class="btn btn-primary btn-sm" onclick="window.showView('register', { venueId: 'central-quad' })">Select Venue & Register</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Venue 2 -->
+          <div class="card" style="overflow: hidden; display: flex; flex-direction: column;">
+            <div style="height: 220px; position: relative;">
+              <img src="/assets/images%20(2)-e_LaDkn0.jpeg" alt="Auditorium" style="width: 100%; height: 100%; object-fit: cover;" />
+              <div style="position: absolute; top: 14px; right: 14px; background-color: #FFF; padding: 5px 12px; border-radius: 20px; font-size: 0.88rem; font-weight: 700;">
+                ⭐ 4.9 Campus Rating
+              </div>
+            </div>
+            <div style="padding: 28px; flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <h3 style="font-size: 1.3rem; margin-bottom: 8px;">Alliance Grand Performing Auditorium</h3>
+                <div style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 18px;">📍 Academic Block B</div>
+                <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px;">
+                  <span style="font-size: 0.8rem; background: var(--bg-primary); padding: 5px 12px; border-radius: 6px;">✓ Central AC</span>
+                  <span style="font-size: 0.8rem; background: var(--bg-primary); padding: 5px 12px; border-radius: 6px;">✓ Acoustic Panels</span>
+                </div>
+              </div>
+              <div style="border-top: 1px solid var(--border-color); padding-top: 18px; display: flex; align-items: center; justify-content: space-between;">
+                <div>
+                  <span style="font-size: 0.78rem; color: var(--text-muted);">Arena Capacity</span>
+                  <div style="font-size: 1.25rem; font-weight: 800; color: var(--accent-primary);">1,200 Delegates</div>
+                </div>
+                <button class="btn btn-primary btn-sm" onclick="window.showView('register', { venueId: 'main-auditorium' })">Select Venue & Register</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Venue 3 -->
+          <div class="card" style="overflow: hidden; display: flex; flex-direction: column;">
+            <div style="height: 220px; position: relative;">
+              <img src="/assets/images-c99nFU7H.jpeg" alt="Tech Hall" style="width: 100%; height: 100%; object-fit: cover;" />
+              <div style="position: absolute; top: 14px; right: 14px; background-color: #FFF; padding: 5px 12px; border-radius: 20px; font-size: 0.88rem; font-weight: 700;">
+                ⭐ 4.85 Campus Rating
+              </div>
+            </div>
+            <div style="padding: 28px; flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <h3 style="font-size: 1.3rem; margin-bottom: 8px;">Tech & Innovation Convention Hall</h3>
+                <div style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 18px;">📍 School of Advanced Computing</div>
+                <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px;">
+                  <span style="font-size: 0.8rem; background: var(--bg-primary); padding: 5px 12px; border-radius: 6px;">✓ Gigabit Wi-Fi</span>
+                  <span style="font-size: 0.8rem; background: var(--bg-primary); padding: 5px 12px; border-radius: 6px;">✓ Dual 4K Projectors</span>
+                </div>
+              </div>
+              <div style="border-top: 1px solid var(--border-color); padding-top: 18px; display: flex; align-items: center; justify-content: space-between;">
+                <div>
+                  <span style="font-size: 0.78rem; color: var(--text-muted);">Arena Capacity</span>
+                  <div style="font-size: 1.25rem; font-weight: 800; color: var(--accent-primary);">600 Delegates</div>
+                </div>
+                <button class="btn btn-primary btn-sm" onclick="window.showView('register', { venueId: 'tech-park-hall' })">Select Venue & Register</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2) REGISTRATION FORM VIEW -->
+    <section id="register-view" class="view-section" style="padding: 40px 0 80px;">
+      <div class="container">
+        <div style="text-align: center; margin-bottom: 40px;">
+          <span class="badge badge-emerald" style="margin-bottom: 10px;">Alliance ONE 2026 — Official Registration Form</span>
+          <h2 style="font-size: 2.4rem;">Alliance University Event Registration</h2>
+          <p style="color: var(--text-secondary); margin-top: 6px; font-size: 1.05rem;">Complete your registration form to get your Official Fest Pass & Competition Slot.</p>
+        </div>
+
+        <!-- Stepper Indicators -->
+        <div class="stepper" style="max-width: 1000px; margin: 0 auto 44px;">
+          <div class="stepper-progress"></div>
+          <div class="step-item active" id="step-ind-1">
+            <div class="step-bubble">1</div>
+            <div class="step-label">Delegate Info</div>
+          </div>
+          <div class="step-item" id="step-ind-2">
+            <div class="step-bubble">2</div>
+            <div class="step-label">Event & Arena</div>
+          </div>
+          <div class="step-item" id="step-ind-3">
+            <div class="step-bubble">3</div>
+            <div class="step-label">Fees & Pass Addons</div>
+          </div>
+          <div class="step-item" id="step-ind-4">
+            <div class="step-bubble">4</div>
+            <div class="step-label">Payment & E-Ticket</div>
+          </div>
+        </div>
+
+        <!-- Main Form Card -->
+        <div style="max-width: 1100px; margin: 0 auto;">
+          <div class="card" style="padding: 44px;">
+            
+            <!-- STEP 1: Delegate Info (Requirement 3) -->
+            <div id="form-step-1" class="form-step-content">
+              <h3 style="font-size: 1.4rem; margin-bottom: 24px;">Step 1: Student & College Delegate Details</h3>
+              
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+                <div class="form-group">
+                  <label class="form-label">Student Full Name *</label>
+                  <input type="text" id="input-name" class="form-input" placeholder="e.g. Ananya Hegde" value="Ananya Hegde" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Phone Number *</label>
+                  <input type="tel" id="input-phone" class="form-input" placeholder="e.g. +91 98450 11223" value="+91 98450 11223" />
+                </div>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+                <div class="form-group">
+                  <label class="form-label">College / University Name *</label>
+                  <input type="text" id="input-college" class="form-input" placeholder="e.g. Alliance University / PES University" value="Alliance University" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">USN / Student Roll Number</label>
+                  <input type="text" id="input-roll" class="form-input" placeholder="e.g. 1AL24CS042" value="1AL24CS042" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Student Email Address</label>
+                <input type="email" id="input-email" class="form-input" placeholder="ananya.h@student.alliance.edu.in" value="ananya.h@student.alliance.edu.in" />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Hostel / Residential Address *</label>
+                <textarea id="input-address" class="form-textarea" rows="3" placeholder="Enter complete residential or hostel room address">Alliance University Student Housing, Block C, Bengaluru</textarea>
+              </div>
+            </div>
+
+            <!-- STEP 2: Event Dropdown & Location (Requirements 4 & 5) -->
+            <div id="form-step-2" class="form-step-content" style="display: none;">
+              <h3 style="font-size: 1.4rem; margin-bottom: 24px;">Step 2: Alliance ONE Event Dropdown & Campus Arena</h3>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+                <!-- Event Dropdown (Requirement 4) -->
+                <div class="form-group">
+                  <label class="form-label">Select Event Type (Dropdown) *</label>
+                  <select id="event-type-select" class="form-select">
+                    <option value="battle-of-bands">[Cultural] Battle of Bands & Pro-Night — Base ₹1200</option>
+                    <option value="hack-alliance" selected>[Technical] HackAlliance 24-Hour Hackathon — Base ₹800</option>
+                    <option value="fashion-show">[Cultural] Vogue: National Fashion Show — Base ₹1500</option>
+                    <option value="esports">[Gaming] Esports Championship (Valorant & BGMI) — Base ₹600</option>
+                    <option value="choreonite">[Cultural] Choreonite: Group Dance Battle — Base ₹1000</option>
+                    <option value="robotics-workshop">[Workshops] AI & Autonomous Robotics Workshop — Base ₹500</option>
+                  </select>
+                </div>
+
+                <!-- Location Select (Requirement 5) -->
+                <div class="form-group">
+                  <label class="form-label">Select Campus Location & Venue *</label>
+                  <select id="venue-select" class="form-select">
+                    <option value="central-quad">Central Amphitheatre & Quadrangle (Main Block)</option>
+                    <option value="main-auditorium">Alliance Grand Performing Auditorium (Block B)</option>
+                    <option value="tech-park-hall" selected>Tech & Innovation Convention Hall (Computing Dept)</option>
+                    <option value="sports-complex">Alliance Athletic Complex & Arena (Sports Grounds)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+                <div class="form-group">
+                  <label class="form-label">Fest Date *</label>
+                  <select id="event-date-select" class="form-select">
+                    <option value="2026-10-24">Oct 24, 2026 (Day 1 - Inaugral & Hacks)</option>
+                    <option value="2026-10-25">Oct 25, 2026 (Day 2 - Cultural Battles)</option>
+                    <option value="2026-10-26">Oct 26, 2026 (Day 3 - Pro-Night & Valedictory)</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Start Time Slot *</label>
+                  <input type="time" id="start-time-input" class="form-input" value="09:00" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Expected End Time</label>
+                  <input type="time" id="end-time-input" class="form-input" value="18:00" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div style="display: flex; justify-content: space-between;">
+                  <label class="form-label">Total Team Members / Squad Size</label>
+                  <strong id="guest-count-label" style="color: var(--accent-primary);">4 Participants</strong>
+                </div>
+                <input type="range" id="guest-count-range" min="1" max="15" value="4" style="width: 100%; accent-color: var(--accent-primary); margin: 12px 0;" />
+              </div>
+            </div>
+
+            <!-- STEP 3: Fees & Pass Addons (Requirement 6) -->
+            <div id="form-step-3" class="form-step-content" style="display: none;">
+              <h3 style="font-size: 1.4rem; margin-bottom: 24px;">Step 3: Registration Fee & Official Merchandise Pass</h3>
+              
+              <label class="form-label" style="margin-bottom: 14px;">Select Official Alliance ONE Fest Add-ons:</label>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 32px;">
+                <label class="card" style="padding: 20px; cursor: pointer; display: block;">
+                  <input type="checkbox" class="addon-checkbox" data-name="Official Alliance ONE 2026 Merchandise T-Shirt" data-price="499" checked style="accent-color: var(--accent-primary);" />
+                  <strong style="margin-left: 8px;">Official Alliance ONE T-Shirt (+₹499)</strong>
+                  <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px;">Limited edition varsity t-shirt with official fest emblem.</p>
+                </label>
+
+                <label class="card" style="padding: 20px; cursor: pointer; display: block;">
+                  <input type="checkbox" class="addon-checkbox" data-name="All-Day Campus Food & Beverage VIP Pass" data-price="350" checked style="accent-color: var(--accent-primary);" />
+                  <strong style="margin-left: 8px;">All-Day Campus Food VIP Pass (+₹350)</strong>
+                  <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px;">Unlimited food truck access & refreshment stalls.</p>
+                </label>
+              </div>
+
+              <!-- Price Table (Item 6) -->
+              <div style="background-color: var(--bg-primary); padding: 28px; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                <h4 style="margin-bottom: 18px; font-size: 1.15rem;">✨ Event Registration Fee Calculation</h4>
+                <table style="width: 100%; border-collapse: collapse; font-size: 0.95rem;">
+                  <tbody>
+                    <tr style="border-bottom: 1px dashed var(--border-color);">
+                      <td style="padding: 10px 0;">Base Registration Fee</td>
+                      <td id="price-base-fee" style="text-align: right; font-weight: 600;">₹800</td>
+                    </tr>
+                    <tr style="border-bottom: 1px dashed var(--border-color);">
+                      <td style="padding: 10px 0;">Event Category Scale Multiplier</td>
+                      <td id="price-multiplier" style="text-align: right; font-weight: 600;">₹160</td>
+                    </tr>
+                    <tr style="border-bottom: 1px dashed var(--border-color);">
+                      <td style="padding: 10px 0;">Team Member Registration Charges</td>
+                      <td id="price-team-surcharge" style="text-align: right; font-weight: 600;">₹450</td>
+                    </tr>
+                    <tr style="border-bottom: 1px dashed var(--border-color);">
+                      <td style="padding: 10px 0;">Merchandise Add-ons Total</td>
+                      <td id="price-addons-total" style="text-align: right; font-weight: 600;">₹849</td>
+                    </tr>
+                    <tr style="border-bottom: 1px dashed var(--border-color);">
+                      <td style="padding: 10px 0;">Festival Amenities & Tax (18%)</td>
+                      <td id="price-tax" style="text-align: right; font-weight: 600;">₹406</td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 16px 0 0; font-weight: 800; font-size: 1.15rem;">Total Delegate Fee:</td>
+                      <td id="price-grand-total" style="padding: 16px 0 0; text-align: right; font-weight: 800; font-size: 1.35rem; color: var(--accent-primary);">₹2,665</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- STEP 4: Payment Options (Requirement 7) -->
+            <div id="form-step-4" class="form-step-content" style="display: none;">
+              <h3 style="font-size: 1.4rem; margin-bottom: 24px;">Step 4: Fee Payment Option (Online / Campus Cash Desk)</h3>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px;">
+                <label id="payment-method-online-card" class="card" style="padding: 24px; cursor: pointer; border: 2px solid var(--accent-primary); background-color: var(--accent-primary-light); display: block;">
+                  <input type="radio" name="pay-method" value="online" checked onclick="window.setPaymentMethod('online')" style="accent-color: var(--accent-primary);" />
+                  <strong style="font-size: 1.1rem; margin-left: 8px;">Online Payment (UPI/Card)</strong>
+                  <p style="font-size: 0.88rem; color: var(--text-secondary); margin-top: 6px;">Instant digital entry e-pass issuance.</p>
+                </label>
+
+                <label id="payment-method-cash-card" class="card" style="padding: 24px; cursor: pointer; display: block;">
+                  <input type="radio" name="pay-method" value="cash" onclick="window.setPaymentMethod('cash')" style="accent-color: var(--accent-primary);" />
+                  <strong style="font-size: 1.1rem; margin-left: 8px;">Cash at Campus Helpdesk</strong>
+                  <p style="font-size: 0.88rem; color: var(--text-secondary); margin-top: 6px;">Pay in cash at Alliance Student Center desk.</p>
+                </label>
+              </div>
+
+              <div id="online-payment-fields" style="padding: 24px; background-color: var(--bg-primary); border-radius: var(--radius-md); margin-bottom: 28px;">
+                <div class="form-group" style="margin: 0;">
+                  <label class="form-label">Enter Student UPI ID</label>
+                  <input type="text" class="form-input" placeholder="e.g. student@upi or mobile@okicici" value="ananya@upi" />
+                </div>
+              </div>
+
+              <div id="cash-payment-fields" style="display: none; padding: 22px; background-color: var(--accent-sage-light); border-radius: var(--radius-md); margin-bottom: 28px;">
+                <strong>Cash Payment Note:</strong> Present your Registration Pass ID at Alliance Campus Desk within 24 hours.
+              </div>
+
+              <div style="padding: 24px; border: 2px solid var(--accent-primary); border-radius: var(--radius-md); background-color: var(--accent-primary-light); display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <div style="font-size: 0.9rem;">Registering for Alliance ONE 2026</div>
+                  <div style="font-size: 0.85rem; color: var(--text-secondary);">Confirmation Delegate Pass</div>
+                </div>
+                <div style="text-align: right;">
+                  <div style="font-size: 0.82rem; color: var(--text-muted);">Final Fee</div>
+                  <div id="summary-final-total" style="font-size: 1.5rem; font-weight: 800; color: var(--accent-primary);">₹2,665</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Navigation Controls -->
+            <div style="display: flex; justify-content: space-between; margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border-color);">
+              <button id="prev-step-btn" type="button" class="btn btn-outline" onclick="window.prevStep()" style="display: none;">⬅ Back</button>
+              <button id="next-step-btn" type="button" class="btn btn-primary" onclick="window.nextStep()">Next Step ➔</button>
+              <button id="submit-reg-btn" type="button" class="btn btn-primary btn-lg" onclick="window.submitRegistration()" style="display: none;">Confirm Registration & Get Fest Pass ✔</button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3) E-TICKET PASS & BOOKING STATUS VIEW (Requirement 8) -->
+    <section id="status-view" class="view-section" style="padding: 48px 0 100px;">
+      <div class="container">
+        <div class="btn-no-print" style="text-align: center; margin-bottom: 36px;">
+          <div class="badge badge-emerald" style="padding: 8px 18px; font-size: 0.92rem; margin-bottom: 14px;">✔ Fest Registration Confirmed!</div>
+          <h2 style="font-size: 2.4rem;">Alliance University — Alliance ONE E-Pass</h2>
+          <p style="color: var(--text-secondary); margin-top: 6px; font-size: 1.05rem;">Your entry pass and competition slot have been confirmed. Below is your official delegate pass.</p>
+        </div>
+
+        <!-- Printable Pass Card -->
+        <div class="printable-card card" style="max-width: 1100px; margin: 0 auto; overflow: hidden;">
+          <div style="background: linear-gradient(135deg, var(--accent-primary) 0%, #1B4D3E 100%); color: #FFF; padding: 28px 40px; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <span style="font-size: 0.85rem; opacity: 0.9; text-transform: uppercase; letter-spacing: 1px;">Alliance University</span>
+              <h3 style="color: #FFF; font-size: 1.9rem; margin-top: 4px;">Alliance ONE 2026 — Official Delegate Entry Pass</h3>
+            </div>
+            <div style="text-align: right;">
+              <div style="font-size: 0.82rem; opacity: 0.9;">Pass Reference ID</div>
+              <div id="pass-ref-id" style="font-size: 1.5rem; font-weight: 800;">ALLIANCE-ONE-9821</div>
+            </div>
+          </div>
+
+          <div style="padding: 40px;">
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 36px; margin-bottom: 36px;">
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+                <div style="background-color: var(--bg-primary); padding: 20px; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                  <h4 style="font-size: 1.05rem; margin-bottom: 14px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">Student Delegate Info</h4>
+                  <div style="display: flex; flex-direction: column; gap: 10px; font-size: 0.92rem;">
+                    <div>Name: <strong id="pass-delegate-name">Ananya Hegde</strong></div>
+                    <div>College: <strong id="pass-college-name">Alliance University</strong></div>
+                    <div>USN/Roll: <strong id="pass-roll-no">1AL24CS042</strong></div>
+                    <div>Phone: <strong id="pass-phone">+91 98450 11223</strong></div>
+                    <div>Email: <span id="pass-email">ananya.h@student.alliance.edu.in</span></div>
+                  </div>
+                </div>
+
+                <div style="background-color: var(--bg-primary); padding: 20px; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                  <h4 style="font-size: 1.05rem; margin-bottom: 14px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">Event & Campus Arena</h4>
+                  <div style="display: flex; flex-direction: column; gap: 10px; font-size: 0.92rem;">
+                    <div>Event: <strong id="pass-event-name" style="color: var(--accent-primary);">HackAlliance 24-Hour Hackathon</strong></div>
+                    <div>Arena: <strong id="pass-venue-name">Tech & Innovation Hall</strong></div>
+                    <div style="font-size: 0.8rem; color: var(--text-muted);" id="pass-venue-location">School of Advanced Computing</div>
+                    <div>Date: <strong id="pass-event-date">2026-10-24</strong></div>
+                    <div>Slot: <strong id="pass-event-slot">09:00 to 18:00</strong></div>
+                    <div>Team: <strong id="pass-team-size">4 Participants</strong></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Security QR -->
+              <div style="background-color: var(--accent-primary-light); padding: 24px; border-radius: var(--radius-md); border: 2px dashed var(--accent-primary); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+                <div style="font-size: 80px; line-height: 1;">📱</div>
+                <strong style="font-size: 0.95rem; color: var(--accent-primary); margin-top: 10px;">Official E-Pass Security QR</strong>
+                <span style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 4px;">Scan at Alliance Campus Entrance</span>
+              </div>
+            </div>
+
+            <!-- Fee Breakdown Invoice -->
+            <div style="margin-bottom: 36px;">
+              <h4 style="font-size: 1.15rem; margin-bottom: 16px;">Itemized Registration Fee Breakdown</h4>
+              <table style="width: 100%; border-collapse: collapse; font-size: 0.95rem;">
+                <thead>
+                  <tr style="background-color: var(--accent-primary-light); text-align: left;">
+                    <th style="padding: 14px;">Description</th>
+                    <th style="padding: 14px;">Details</th>
+                    <th style="padding: 14px; text-align: right;">Amount (₹)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="border-bottom: 1px solid var(--border-color);">
+                    <td style="padding: 14px;">Base Registration Fee</td>
+                    <td id="pass-multiplier" style="padding: 14px; color: var(--text-secondary);">Multiplier 1.2x</td>
+                    <td id="pass-base-fee" style="padding: 14px; text-align: right; font-weight: 600;">₹800</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid var(--border-color);">
+                    <td style="padding: 14px;">Merchandise & Add-ons</td>
+                    <td id="pass-addons-list" style="padding: 14px; color: var(--text-secondary);">Fest T-Shirt, Food Pass</td>
+                    <td style="padding: 14px; text-align: right; font-weight: 600;">₹849</td>
+                  </tr>
+                  <tr>
+                    <td colSpan="2" style="padding: 18px 14px; font-weight: 800; font-size: 1.15rem;">Grand Total Delegate Fee:</td>
+                    <td id="pass-grand-total" style="padding: 18px 14px; text-align: right; font-weight: 800; font-size: 1.4rem; color: var(--accent-primary);">₹6,242</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 18px 24px; border-radius: var(--radius-md); background-color: var(--accent-primary-light); border: 1px solid var(--accent-primary);">
+              <div>
+                <span id="pass-payment-mode" style="font-size: 0.84rem; text-transform: uppercase; font-weight: 700; color: var(--accent-primary);">Payment Mode: Online Mode</span>
+                <div id="pass-txn-id" style="font-size: 0.95rem; font-weight: 600;">Transaction Ref: TXN-UPI-AL1-9821</div>
+              </div>
+              <div class="badge badge-sage" style="font-size: 0.92rem; padding: 8px 16px;">Status: Confirmed</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="btn-no-print" style="display: flex; justify-content: center; gap: 20px; margin-top: 40px;">
+          <button class="btn btn-outline btn-lg" onclick="window.showView('dashboard')">⬅ Back to Dashboard</button>
+          <button class="btn btn-secondary btn-lg" onclick="window.openBookingsModal()">🎫 View All Registrations</button>
+          <button class="btn btn-primary btn-lg" onclick="window.printTicketPass()">🖨️ Print / Download Official Pass</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Registrations Search & Filter Modal -->
+  <div id="bookings-modal" class="modal-overlay">
+    <div class="card" style="width: 100%; max-width: 1050px; max-height: 90vh; display: flex; flex-direction: column; overflow: hidden;">
+      <div style="padding: 24px 32px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; background-color: var(--bg-secondary);">
+        <h3 style="font-size: 1.4rem; margin: 0;">🎫 Registered Event Passes</h3>
+        <button onclick="window.closeBookingsModal()" style="background: none; border: none; font-size: 24px; cursor: pointer;">✕</button>
+      </div>
+      <div id="bookings-list-container" style="padding: 28px 32px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 16px;"></div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast-notice" class="toast-notice">Notice</div>
+
+  <!-- Footer -->
+  <footer style="background-color: var(--bg-secondary); border-top: 1px solid var(--border-color); padding: 30px 0; margin-top: auto;">
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+      <div>
+        <strong style="font-family: var(--font-heading); color: var(--text-primary);">Alliance <span style="color: var(--accent-primary);">ONE</span> 2026</strong>
+        <p style="font-size: 0.82rem; color: var(--text-secondary);">Alliance University Official Inter-College Registration System</p>
+      </div>
+      <div style="font-size: 0.82rem; color: var(--text-muted);">© 2026 Alliance University. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <!-- Application Script Engine -->
+  <script src="app.js"></script>
+</body>
+</html>
